@@ -1,0 +1,120 @@
+*
+{
+	/* debug */
+	/*border: 1px solid black;*/
+}
+
+*
+{
+	/* Let me decide when I want margin or padding */
+	margin: 0;
+	padding: 0;
+}
+
+
+html
+{
+	height: 100%;
+	font-family: Segoe UI, Roboto, sans-serif;
+}
+
+body
+{
+	height: 100%;
+
+	/*display: grid;*/
+	/*grid-template-rows:  auto; */
+}
+
+header
+{
+	display: grid;
+	grid-template-columns: auto 50%;
+
+	overflow: hidden;
+
+	font-size: 2.5em;
+
+	padding: 1em 70pt;
+}
+
+nav
+{
+	height: 0;
+}
+
+ul
+{
+	/*list-style-type: none;*/
+	font-size: 0.6em;
+
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+}
+
+ul li
+{
+	display: inline-block;
+
+	text-transform: uppercase;
+
+	text-align: center;
+	padding: 0.5em 1em;
+
+	/*background: rgba(255,255,255,0.2);*/
+
+	transition: color 0.15s ease-in-out;
+	-moz-transition: color 0.15s ease-in-out;
+	-o-transition: color 0.15s ease-in-out;
+	-webkit-transition: color 0.15s ease-in-out;
+}
+
+ul li:hover
+{
+
+	cursor: pointer;
+}
+
+/* MAIN */
+
+main
+{
+	padding: 70pt;
+}
+
+main>div
+{
+	padding: 2em;
+}
+
+
+main>div h1
+{
+	width: 100%;
+}
+
+main  p
+{
+	font-family: Georgia, serif;
+}
+
+.grid-container
+{
+	margin: auto;
+	max-width: 1000px;
+	display: grid;
+	grid-template-columns: auto auto auto;
+	grid-gap: 1em;
+}
+
+.grid-item
+{
+	height: 200px;
+	width: 200px;
+	/*width: 100%;*/
+
+	background-color: rgba(0,0,0,0.1);
+}
+
+
+/*@media only screen and (max-width: 500px) {*/

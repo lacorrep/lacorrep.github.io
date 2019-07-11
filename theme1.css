@@ -1,0 +1,49 @@
+:root {
+  --main-color: #06c;
+  --accent-color: #006;
+}
+
+body
+{
+	/*background: var(--main-color);*/
+	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#527dc8+1,81ddff+100 */
+	background: #527dc8; /* Old browsers */
+	background: -moz-linear-gradient(45deg,  #527dc8 1%, #81ddff 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(45deg,  #527dc8 1%,#81ddff 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(45deg,  #527dc8 1%,#81ddff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#527dc8', endColorstr='#81ddff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background-repeat: no-repeat;
+}
+
+a
+{
+	color:white;
+	text-decoration: none;
+}
+
+#paul-lacorre
+{
+	/*font-size: 1.1em;*/
+}
+
+header
+{
+	background-color: rgba(0,0,0,0.6);
+	color: white;
+}
+
+ul li:hover
+{
+	color: black;
+	/*color: rgb(137, 238, 255);*/
+}
+
+main
+{
+	color: black;
+}
+
+main>div
+{
+	background-color: white;
+}
