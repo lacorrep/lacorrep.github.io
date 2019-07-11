@@ -1,24 +1,41 @@
+/* FIRST COLOR THEME */
+
+
 :root {
-  --main-color: #06c;
-  --accent-color: #006;
+	/*
+	5271c8
+	527dc8
+	81ddff
+	5ae4f0
+	*/
+	--blue-one: #527dc8;
+	--blue-two: #81ddff;
 }
 
-body
+
+html
 {
-	/*background: var(--main-color);*/
+	/*background: var(--blue-one);*/
 	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#527dc8+1,81ddff+100 */
 	background: #527dc8; /* Old browsers */
-	background: -moz-linear-gradient(45deg,  #527dc8 1%, #81ddff 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(45deg,  #527dc8 1%,#81ddff 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(45deg,  #527dc8 1%,#81ddff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#527dc8', endColorstr='#81ddff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: -moz-linear-gradient(45deg, var(--blue-one) 1%, var(--blue-two) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(45deg, var(--blue-one) 1%,var(--blue-two) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(45deg, var(--blue-one) 1%,var(--blue-two) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: linear-gradient(45deg, var(--blue-one) 1%,var(--blue-two) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#527dc8', endColorstr='#5ae4f0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 	background-repeat: no-repeat;
 }
 
 a
 {
-	color:white;
+	color: black;
 	text-decoration: none;
+	cursor: pointer;
+}
+
+header a
+{
+	color: white;
 }
 
 #paul-lacorre
@@ -38,12 +55,19 @@ ul li:hover
 	/*color: rgb(137, 238, 255);*/
 }
 
-main
+main, footer
 {
 	color: black;
 }
 
-main>div
+main>div, footer
 {
 	background-color: white;
 }
+
+/*
+main p
+{
+	font-family: Georgia, serif;
+}
+*/

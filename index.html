@@ -5,39 +5,88 @@
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" href="layout.css"/>
 	<link rel="stylesheet" href="theme1.css"/>
+	<link rel="icon" href="img/favicon-32.png" sizes="32x32">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=latin-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,500,600&display=swap" rel="stylesheet">
 	<title>Paul Lacorre</title>
 </head>
 <body>
 
 <!-- Header -->
 <header>
-	<a id="paul-lacorre" href="">Paul Lacorre</a>
+	<a id="paul-lacorre" href="https://selakant.github.io/">Paul Lacorre</a>
 
 	<!-- Navigation -->
 	<nav>
 		<ul>
-			<a href="research"><li>Research</li></a>
-			<a href="projects"><li>Projects</li></a>
-			<a href="resources"><li>Resources</li></a>
-			<a href="contact"><li>Contact</li></a>
+			<a href="#research"><li>Research</li></a>
+			<!-- <a href="#projects"><li>Projects</li></a> -->
+			<!-- <a href="#resources"><li>Resources</li></a> -->
+			<a href="#contact" onclick="showContactForm()"><li>Contact</li></a>
 		</ul>
 	</nav>
 </header>
 
 <!-- Main content -->
 <main>
-	<div>
-		<h1>Hi!</h1>
+	<div id="intro">
+		<h1>Hi! I'm Paul.</h1>
 
-		<br>
-
-		<p>Hello world :)</p>
+		<p>I am a <b>PhD student</b> at Nantes University (France).<span class="spacer2"></span></p>
+		<p>My research topic is <b>modeling inflatable panels</b>.</p>
+		<p><span class="spacer2"></span>I have a MSc in <b>computational mechanics</b>.</p>
 	</div>
-	
-</main>
-	
+	<div id="research">
+		<h1>Research</h1>
 
-<!-- No footer (see Contact page) -->
+		<h2>What are inflatable panels?</h2>
+		<p>They are inflatable structures that are thin enough to be considered as plates.</p>
+
+		<h2>What is it used for?</h2>
+		<p>Inflatable surfboards, paddles, tents, walls, floors, space components.</p>
+
+		<h2>Scientific challenges</h2>
+		<p>Non-linear dynamics, large displacements, optical measurement of 3D displacement field.</p>
+	</div>
+<!--
+	<div id="projects">
+		<h1>Projects</h1>
+		<ul class="grid-container">
+			<li class="grid-item">Lorem ipsum</li><li class="grid-item">Lorem ipsum</li><li class="grid-item">Lorem ipsum</li><li class="grid-item">Lorem ipsum</li><li class="grid-item">Lorem ipsum</li><li class="grid-item">Lorem ipsum</li>
+		</ul>
+	</div>
+-->
+<!-- 
+	<div id="resources">
+		<h1>Resources</h1>
+	</div>
+	 -->
+</main>
+
+<footer>
+	<div id="contact">
+		<!--
+		<a onclick="showContactForm()">Contact form</a>
+
+		<span class="spacer1"></span>
+		-->
+
+		<a href="https://www.linkedin.com/in/paul-lacorre-4988b5107/"><img src="img/linkedin-favicon.png" title="Paul Lacorre | LinkedIn"></a>
+
+		<span class="spacer1"></span>
+
+		<a href="https://github.com/selakant"><img src="img/github-favicon.png" title="selakant • GitHub"></a>
+
+	<!--
+	<div id="contact-form">
+		<div style="display:block;height:30pt;"></div>
+		<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScQQGIBp6RfHsIE-PAKbCtfUio8VPQwW22DxpOQ37xbb5Y-yA/viewform?embedded=true&hl=en" width="640" height="770" frameborder="0" marginheight="0" marginwidth="0">Loading... maybe your browser is unable to display this Google Form.</iframe>
+	-->
+	</div>
+
+	</div>
+</footer>
 
 <script src="onready.js"></script>
 </body>

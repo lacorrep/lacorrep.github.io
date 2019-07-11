@@ -1,3 +1,5 @@
+/* STRUCTURE */
+
 *
 {
 	/* debug */
@@ -6,30 +8,31 @@
 
 *
 {
-	/* Let me decide when I want margin or padding */
+	/* Let me decide when I want margin or padding. I'm a grown up. */
 	margin: 0;
 	padding: 0;
 }
 
-
 html
 {
-	height: 100%;
-	font-family: Segoe UI, Roboto, sans-serif;
+	scroll-behavior: smooth;
+	
+	min-height: 100%;
+	font-family: 'Roboto', 'Arial', 'Segoe UI', sans-serif;
 }
 
 body
 {
-	height: 100%;
+	min-height: 100%;
 
 	/*display: grid;*/
-	/*grid-template-rows:  auto; */
+	/*grid-template-rows: auto; */
 }
 
 header
 {
 	display: grid;
-	grid-template-columns: auto 50%;
+	grid-template-columns: 30% auto;
 
 	overflow: hidden;
 
@@ -40,19 +43,22 @@ header
 
 nav
 {
-	height: 0;
+	margin: 0;
+	padding: 0;
+
+	text-align: right;
 }
 
-ul
+nav ul
 {
 	/*list-style-type: none;*/
 	font-size: 0.6em;
 
-	display: grid;
-	grid-template-columns: auto auto auto auto;
+	display: inline-block;
+	justify-content: flex-start;
 }
 
-ul li
+nav ul li
 {
 	display: inline-block;
 
@@ -69,52 +75,182 @@ ul li
 	-webkit-transition: color 0.15s ease-in-out;
 }
 
-ul li:hover
+nav ul li:hover
 {
 
 	cursor: pointer;
 }
 
-/* MAIN */
+/* BELOW HEADER */
 
 main
 {
 	padding: 70pt;
+	padding-bottom: 0;
+}
+
+footer
+{
+	padding: 40pt;
 }
 
 main>div
 {
 	padding: 2em;
+	margin-bottom: 70pt;
 }
 
+h1, h2
+{
+	font-weight: 500;
+}
+
+main>div h2
+{
+	/*
+	font-family: Lato;
+	font-weight: 400;
+	font-size: 1.2em;
+*/
+	font-family: Open Sans, Roboto, sans-serif;
+	font-weight: 600;
+	font-size: 1.3em;
+
+	margin: 15pt 0 5pt 0;
+}
 
 main>div h1
 {
+	margin-bottom: 0.3em;
 	width: 100%;
 }
 
-main  p
+#intro p
 {
-	font-family: Georgia, serif;
+	text-align: center;
+	font-size: 1.3em;
+	margin: 1em;
+}
+
+footer
+{
+	text-align: center;
 }
 
 .grid-container
 {
 	margin: auto;
-	max-width: 1000px;
-	display: grid;
-	grid-template-columns: auto auto auto;
-	grid-gap: 1em;
+
+	width: 90%;
+	text-align: center;
 }
 
 .grid-item
 {
+	font-weight: 600;
+
+	display: inline-block;
+	box-sizing: border-box;
+	padding: 1em;
+
 	height: 200px;
-	width: 200px;
-	/*width: 100%;*/
+	width:  200px;
+	margin: 0.5em;
 
 	background-color: rgba(0,0,0,0.1);
 }
 
+#contact-form
+{
+	display: block;
+	height: 0px;
 
-/*@media only screen and (max-width: 500px) {*/
+			transition: height 0.5s ease-out;
+	   -moz-transition: height 0.5s ease-out;
+		 -o-transition: height 0.5s ease-out;
+	-webkit-transition: height 0.5s ease-out;
+
+	overflow: hidden;
+}
+
+.dropdown
+{
+	height: 800px !important;
+}
+
+
+
+/* ******************************************************* */
+/*                        RESPONSIVE                       */
+/* ******************************************************* */
+
+@media only screen and (min-width: 650px) /* above 650px */
+{
+	.spacer2
+	{
+		display:inline-block;
+		width:8em;
+	}
+	.spacer1
+	{
+		display:inline-block;
+		width:50pt;
+	}
+}
+
+@media only screen and (max-width: 1200px) /* below 650px */
+{
+
+	header
+	{
+		display: grid;
+		grid-template-columns: 50% 50%;
+	}	
+}
+
+@media only screen and (max-width: 900px) /* below 900px */
+{
+
+	.spacer1
+	{
+		display: inline-block;
+		width: 30pt;
+	}
+
+	header
+	{
+		grid-template-columns: 1fr;
+		grid-template-rows: 33% 66%;
+
+		padding: 1em 30pt;
+	}
+	nav ul
+	{
+		display: block;
+	}
+	nav ul li
+	{
+		padding: 0.4em;
+	}
+
+	/* BELOW HEADER */
+
+	main, footer
+	{
+		padding: 20pt;
+	}
+
+	main
+	{
+		padding-bottom: 0;
+	}
+
+	main>div
+	{
+		text-align: center;
+
+		padding: 2em;
+		margin-bottom: 20pt;
+	}
+
+}
