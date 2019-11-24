@@ -40,7 +40,10 @@ header a
 
 #paul-lacorre
 {
-	/*font-size: 1.1em;*/
+	transition: color 0.15s ease-in-out;
+	-moz-transition: color 0.15s ease-in-out;
+	-o-transition: color 0.15s ease-in-out;
+	-webkit-transition: color 0.15s ease-in-out;
 }
 
 header
@@ -49,7 +52,7 @@ header
 	color: white;
 }
 
-ul li:hover
+ul li:hover, #paul-lacorre:hover
 {
 	color: black;
 	/*color: rgb(137, 238, 255);*/
@@ -65,9 +68,20 @@ main>div, footer
 	background-color: white;
 }
 
-/*
-main p
+main a
 {
-	font-family: Georgia, serif;
+	transition: color 0.10s ease-in-out;
+	-moz-transition: color 0.10s ease-in-out;
+	-o-transition: color 0.10s ease-in-out;
+	-webkit-transition: color 0.10s ease-in-out;
 }
-*/
+
+main a:hover
+{
+	color: rgb(0,70,255);
+}
+
+main p a
+{
+	text-decoration: underline;
+}

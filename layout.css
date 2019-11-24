@@ -28,6 +28,10 @@ body
 	/*display: grid;*/
 	/*grid-template-rows: auto; */
 }
+p
+{
+	line-height: 1.5em;
+}
 
 header
 {
