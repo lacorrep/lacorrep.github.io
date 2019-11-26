@@ -106,13 +106,12 @@ scene1.add(fibers)
 function transformation(X,Y,Z,t)
 {
 	// The transformation applied to the plate.
-	let x, y, z;
 
 	// Simple bending (Reissner-Mindlin)
 	theta = A1*Math.cos(A3*t)*Y/glob.LY;
-	x = X;
-	y = Y - Z*Math.sin(theta);
-	z = Z + A2*Math.cos(A3*t)*((X/glob.LX)*(X/glob.LX)) + Z*( Math.cos(theta)-1 );
+	let x = X;
+	let y = Y - Z*Math.sin(theta);
+	let z = Z + A2*Math.cos(A3*t)*(X/glob.LX)*(X/glob.LX) + Z*( Math.cos(theta)-1 );
 
 	return {x:x, y:y, z:z}
 }
