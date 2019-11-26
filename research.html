@@ -15,15 +15,26 @@
 			font-size: 1.6em;
 			margin: 0 0 7pt 0;
 		}
+		canvas
+		{
+			float:right;
+			margin-left: 1em;
+			background: rgba(0,0,0,0.02);
+		}
 		#cv1
 		{
 			cursor: -webkit-grab;
 			cursor: grab;
+
 		}
 		#cv1:active
 		{
 			cursor: -webkit-grabbing;
 			cursor: grabbing;
+		}
+		#cv2
+		{
+			cursor: pointer;
 		}
 		.katex-html
 		{
@@ -34,6 +45,8 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap" rel="stylesheet"> 
 	<title>Research | Paul Lacorre</title>
+	<meta name="description" content="I talk about my research on inflatable plates and share things that I enjoy learning.">
+	<meta name="keywords" content="lacorre,nantes,inflatable plate,mechanics,PhD,plaque gonflable">
 
 	<!-- KaTeX -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
@@ -79,25 +92,27 @@
 	</div>
 	<div>
 		<h2>Nonlinear plate theory</h2>
-		<canvas id="cv1" width=550 height=400 style="vertical-align: bottom; float:right; margin-left: 1em; background: rgba(0,0,0,0.05);">Erreur avec la balise canvas</canvas>
+		<canvas id="cv1" width=550 height=450>Erreur avec la balise canvas</canvas>
 		<h3>A plate : basically a doormat</h3>
 		<p>	Our goal is to obtain 2D equations that describe our 3D system. Since the geometry of the panel is closer to a 2D body than a 3D one, it seems reasonable to focus our efforts on the two in-plane dimensions.</p>
 		<p>A plate is modeled as a plane onto which a "field" of fibers is attached. Each point of the mid-surface is pierced by a straight line, called the <em>normal fiber</em>. This name is misleading: the fiber is only normal in the initial configuration.
 		We work with the <b>Mindlin–Reissner</b> kinematics assumption:
 		\[ \vec a_3 = \tens R \cdot \vec A_3 \]
-		with $$\tens R$$ a rotation tensor and $$\vec A_3$$ the initial normal fiber. This means that the fibers behave as rigid bodies; they may rotate but not stretch.
+		with $$\tens R = \tens R (\vec P_0)$$ a rotation tensor field and $$\vec A_3 = \vec e_3$$ the initial normal fiber. This means that the fibers behave as rigid bodies; they may rotate but not stretch.
 		</p>
 		<p>This yields the following displacement field:
 		\[\vec U ( \vec Q_0,t ) = \vec U (\vec P_0, t) + Z (\tens R - \tens I) \vec A_3\]
 		<!-- \[ \vec g_i = \derp{\vec Q}{\xi^i} \] --></p>
 	</div>
 	<div>
+		<canvas id="cv2" width=400 height=300></canvas>
 		<h2>Follower forces</h2>
-		<p>Inflatable structures acquire their rigidity from internal pressure.</p>
+		<p>Inflatable structures acquire their rigidity from internal pressure. The surface stress vector $$\vec t$$ is:</p>
 		\[ \vec t = p \vec n \]
+		<p>where $$\vec n$$ is the outward normal vector to the plate's upper or lower face. Its analytical expression is not simple. It is drawn in orange in the animation.</p>
 		<p>The virtual power of the internal pressure forces is expressed as:</p>
 		\[ \mathscr{P}^*_{\text{pressure}} = \int_{\Omega} p \vec n \cdot \vec U^*(\vec Q_0,t) \mathrm d \Omega \]
-		<p>$$\vec n$$ must be calculated in the deformed configuration and written mathematically as a function of quantities defined on the mid-surface. It must also be independent of $$Z$$.</p>
+		<p>$$\vec n$$ must be calculated in the deformed configuration and written mathematically as a function of quantities defined on the mid-surface. They must also be independent of $$Z$$.</p>
 	</div>
 	<div>
 		<h2>Linearization</h2>
@@ -119,7 +134,8 @@
 
 <script src="onready.js"></script>
 <script src="lib/three.min.js"></script>
-<script src="lib/TrackballControls.js"></script>
+<script src="lib/canvas_arrow.js"></script>
 <script src="js_research/animation_1.js"></script>
+<script src="js_research/animation_2.js"></script>
 </body>
 </html>
