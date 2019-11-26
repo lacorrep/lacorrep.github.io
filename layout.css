@@ -102,6 +102,7 @@ main>div
 {
 	padding: 2em;
 	margin-bottom: 70pt;
+	overflow: auto;
 }
 
 h1, h2
@@ -115,6 +116,10 @@ main>div h2
 	font-weight: 600;
 	font-size: 1.3em;
 
+	margin: 0 0 5pt 0;
+}
+#research h2
+{
 	margin: 15pt 0 5pt 0;
 }
 

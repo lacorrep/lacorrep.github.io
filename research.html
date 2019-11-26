@@ -5,6 +5,17 @@
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" href="layout.css"/>
 	<link rel="stylesheet" href="theme1.css"/>
+	<style>
+		main > div
+		{
+			text-align: left;
+		}
+		main div h2
+		{
+			font-size: 1.6em;
+			margin: 0 0 7pt 0;
+		}
+	</style>
 	<link rel="icon" href="img/favicon-32.png" sizes="32x32">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap" rel="stylesheet"> 
@@ -49,26 +60,22 @@
 
 <!-- Main content -->
 <main>
-	<div>
-		<h1>Modeling inflatable panels</h1>
+	<div style="text-align: center; font-size: 1.7em;">
+		<h1 style="margin: 0; font-family: Cambria;">Modeling inflatable panels</h1>
 	</div>
 	<div>
-		<div style="width:58%; display: inline-block;">
-			<h2>Nonlinear plate theory</h2>
-			<h3>A plate : basically a doormat</h3>
-			<p>	Our goal is to obtain 2D equations that describe our 3D system. Since the geometry of the panel is closer to a 2D body than a 3D one, it seems reasonable to focus our efforts on the two in-plane dimensions.</p>
-			<p>A plate is modeled as a plane onto which a "field" of fibers is attached. Each point of the mid-surface is pierced by a straight light, called the <em>normal fiber</em>. This name is misleading: the fiber is only normal in the initial configuration.
-			We work with the <b>Mindlin–Reissner</b> kinematics assumption:
-			\[ \vec a_3 = \tens R \cdot \vec A_3 \]
-			with $$\tens R$$ a rotation tensor and $$\vec A_3$$ the initial normal fiber. This means that the fibers behave as rigid bodies; they may rotate but not stretch.
-			</p>
-			<p>This yields the following displacement field:
-			\[\vec U ( \vec Q_0,t ) = \vec U (\vec P_0, t) + Z (\tens R - \tens I) \vec A_3\]
-			<!-- \[ \vec g_i = \derp{\vec Q}{\xi^i} \] --></p>
-		</div>
-		<div style="vertical-align: top; width: 40%; float:right; text-align: center;">
-			<canvas id="cv1" width=400 height=400 style="background: gray;">Erreur avec la balise canvas</canvas>
-		</div>
+		<h2>Nonlinear plate theory</h2>
+		<canvas id="cv1" width=550 height=400 style="vertical-align: bottom; float:right; margin-left: 1em; background: rgba(0,0,0,0.05);">Erreur avec la balise canvas</canvas>
+		<h3>A plate : basically a doormat</h3>
+		<p>	Our goal is to obtain 2D equations that describe our 3D system. Since the geometry of the panel is closer to a 2D body than a 3D one, it seems reasonable to focus our efforts on the two in-plane dimensions.</p>
+		<p>A plate is modeled as a plane onto which a "field" of fibers is attached. Each point of the mid-surface is pierced by a straight line, called the <em>normal fiber</em>. This name is misleading: the fiber is only normal in the initial configuration.
+		We work with the <b>Mindlin–Reissner</b> kinematics assumption:
+		\[ \vec a_3 = \tens R \cdot \vec A_3 \]
+		with $$\tens R$$ a rotation tensor and $$\vec A_3$$ the initial normal fiber. This means that the fibers behave as rigid bodies; they may rotate but not stretch.
+		</p>
+		<p>This yields the following displacement field:
+		\[\vec U ( \vec Q_0,t ) = \vec U (\vec P_0, t) + Z (\tens R - \tens I) \vec A_3\]
+		<!-- \[ \vec g_i = \derp{\vec Q}{\xi^i} \] --></p>
 	</div>
 	<div>
 		<h2>Follower forces</h2>
@@ -86,7 +93,8 @@
 
 <footer>
 	<div>
-		<a class="imglink" onclick="window.open('https://www.linkedin.com/in/paul-lacorre-4988b5107/')"><img src="img/linkedin-favicon.png" title="Paul Lacorre | LinkedIn"></a>
+		<!-- onclick="window.open('https://www.linkedin.com/in/paul-lacorre-4988b5107/')" -->
+		<a class="imglink" ><img src="img/linkedin-favicon.png" title="Paul Lacorre | LinkedIn"></a>
 
 		<span class="spacer1"></span>
 
@@ -97,6 +105,9 @@
 </footer>
 
 <script src="onready.js"></script>
+<script src="lib/three.min.js"></script>
+<!-- <script src="lib/OrbitControls.js"></script> -->
+<script src="lib/TrackballControls.js"></script>
 <script src="js_research/animation_1.js"></script>
 </body>
 </html>
