@@ -35,7 +35,7 @@ function init2()
 
 	// Current point
 
-	let current_point = {X:0.33*L, Y:0};
+	let current_point = {X:L/6, Y:0};
 
 	// Canvas
 
@@ -77,7 +77,7 @@ function init2()
 		let g_y = (Q_prime.y - Q.y)/dl;
 		let norme = Math.sqrt(g_x**2 + g_y**2);
 		
-		return {x: g_x/norme, y: g_y/norme};
+		return {Q: Q, x: g_x/norme, y: g_y/norme};
 	}
 
 	// Rendering
@@ -144,7 +144,7 @@ function init2()
 		// Current point
 
 		// ctx.fillStyle = '#fff';
-		let current_point_image = transformation(current_point.X,0,t);
+		// let current_point_image = transformation(current_point.X,0,t);
 		// ctx.beginPath();
 		// ctx.arc(current_point_image.x, current_point_image.y, 3, 0, 2*Math.PI);
 		// ctx.closePath();
@@ -152,29 +152,28 @@ function init2()
 
 
 		// Normal vectors to the upper and lower surfaces
-		// Find out how I wrote the expression of the normal vector (in the case
-		// a 3D plate) in the papers published during my PhD.
+		// Find out how I wrote the expression of the normal vector analytically
+		// (in the case of a 3D plate) in the papers published during my PhD.
 
 		ctx.strokeStyle = '#f80';
-		let Q = transformation(current_point.X, -H/2, t);
-		let Q_prime = transformation(current_point.X+0.01, -H/2, t);
-		let g_1x = (Q_prime.x - Q.x)/0.01;
-		let g_1y = (Q_prime.y - Q.y)/0.01;
-		let norme = Math.sqrt(g_1x**2 + g_1y**2);
-		ctx.beginPath();
-		canvas_arrow(ctx, Q.x, Q.y, Q.x+normals_length*g_1y/norme, Q.y-normals_length*g_1x/norme) // cross product g1 x e_3
-		ctx.closePath();
-		ctx.stroke();
 
-		Q = transformation(current_point.X, H/2, t);
-		Q_prime = transformation(current_point.X+0.01, H/2, t);
-		g_1x = (Q_prime.x - Q.x)/0.01;
-		g_1y = (Q_prime.y - Q.y)/0.01;
-		norme = Math.sqrt(g_1x**2 + g_1y**2);
+		let g_sup = differential(current_point.X,-H/2, {x:0.01,y:0}, t);
+		ctx.save();
+		ctx.translate(g_sup.Q.x, g_sup.Q.y);
 		ctx.beginPath();
-		canvas_arrow(ctx, Q.x, Q.y, Q.x-normals_length*g_1y/norme, Q.y+normals_length*g_1x/norme) // cross product g1 x e_3
+		canvas_arrow(ctx, 0, 0, normals_length*g_sup.y, -normals_length*g_sup.x);
 		ctx.closePath();
 		ctx.stroke();
+		ctx.restore();
+
+		let g_inf = differential(current_point.X,H/2, {x:0.01,y:0}, t);
+		ctx.save();
+		ctx.translate(g_inf.Q.x, g_inf.Q.y);
+		ctx.beginPath();
+		canvas_arrow(ctx, 0, 0, -normals_length*g_inf.y, normals_length*g_inf.x);
+		ctx.closePath();
+		ctx.stroke();
+		ctx.restore();
 
 		// \vec a^3
 
@@ -182,9 +181,9 @@ function init2()
 		ctx.lineWidth = 2;
 		let a3 = differential(current_point.X,0, {x:0.01,y:0}, t);
 		ctx.save();
-		ctx.translate(current_point_image.x, current_point_image.y);
+		ctx.translate(a3.Q.x, a3.Q.y);
 		ctx.beginPath();
-		canvas_arrow(ctx, 0, 0, normals_length*a3.y, -normals_length*a3.x); // cross product
+		canvas_arrow(ctx, 0, 0, normals_length*a3.y, -normals_length*a3.x);
 		ctx.closePath();
 		ctx.stroke();
 		ctx.restore();

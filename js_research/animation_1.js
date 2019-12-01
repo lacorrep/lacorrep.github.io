@@ -13,6 +13,8 @@ let glob = {LX:1.3, LY: 0.6, H:0.4,
 			phi:0.83};
 glob.fiberLength = glob.H/2;
 
+let mouse = {px: 0, py: 0, sensitivity:1/80}; // mouse info (px: previous x, py: previous y, sensitivity)
+
 
 function init1()
 {
@@ -23,10 +25,28 @@ function init1()
 	cv1.addEventListener("mousemove",function(evt){
 		if( evt.buttons == 1 )
 		{
-			glob.phi += evt.movementX/80;
-			glob.theta += evt.movementY/80;
+			glob.phi += mouse.sensitivity*evt.movementX;
+			glob.theta += mouse.sensitivity*evt.movementY;
 		}
 	})
+	cv1.addEventListener("touchstart",function(evt){
+		// Store position before the movement begins, otherwise the deltaX and deltaY are wrong
+		mouse.px = evt.touches[0].clientX;
+		mouse.py = evt.touches[0].clientY;
+	})
+	cv1.addEventListener("touchmove",function(evt){
+		glob.phi += mouse.sensitivity*(evt.touches[0].clientX-mouse.px);
+		glob.theta += mouse.sensitivity*(evt.touches[0].clientY-mouse.py);
+		mouse.px = evt.touches[0].clientX;
+		mouse.py = evt.touches[0].clientY;
+	})
+
+	// Sometimes in panick the user will double click and that would reset the view. Incompatible with the way I handle "touch" on mobiles.
+	// cv1.addEventListener("dblclick",function(){
+	// 	glob.theta = -0.28;
+	// 	glob.phi = 0.83;
+	// 	// glob.plate_config = 1-glob.plate_config;
+	// })
 
 	let W = cv1.width;
 	let H = cv1.height;
@@ -240,11 +260,6 @@ function init1()
 	}
 	animate1();
 
-	cv1.addEventListener("dblclick",function(){
-		glob.theta = -0.28;
-		glob.phi = 0.83;
-		// glob.plate_config = 1-glob.plate_config;
-	})
 
 	function resize()
 	{

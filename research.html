@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 
+<!-- Let's talk about my research! I enjoy the mathematical part of it because it's very geometrical. Look at all these nice drawings! -->
+
 <html lang="en">
 <head>
 	<meta charset="utf-8"/>
@@ -20,6 +22,7 @@
 			float:right;
 			margin-left: 1em;
 			background: rgba(0,0,0,0.02);
+			user-select: none;
 		}
 		#cv1
 		{
@@ -42,11 +45,14 @@
 		}
 	</style>
 	<link rel="icon" href="img/favicon-32.png" sizes="32x32">
+	<link rel="icon" href="img/favicon-192.png" sizes="192x192">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=latin-ext" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap" rel="stylesheet">
+
 	<title>Research | Paul Lacorre</title>
 	<meta name="description" content="I talk about my research on inflatable plates and share things that I enjoy learning.">
-	<meta name="keywords" content="lacorre,nantes,inflatable plate,mechanics,PhD,plaque gonflable">
+	<meta name="keywords" content="Paul Lacorre,inflatable plate,pressurized,mechanics,PhD,plaque gonflable,Nantes">
+	<meta name="theme-color" content="#81ddff">
 
 	<!-- KaTeX -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
@@ -73,13 +79,14 @@
 <!-- Header -->
 <header>
 	<a id="paul-lacorre" href="index.html">Paul Lacorre</a>
+	<img id="preview" src="img/preview.jpg" style="display:none;" alt="">
 
 	<!-- Navigation -->
 	<nav>
 		<ul>
 			<a href="#research"><li>Research</li></a>
 			<!-- <a href="#projects"><li>Projects</li></a> -->
-			<!-- <a href="#resources"><li>Resources</li></a> -->
+			<!-- <a href="index.html#resources"><li>Resources</li></a> -->
 			<a href="#contact" onclick="showContactForm()"><li>Contact</li></a>
 		</ul>
 	</nav>
@@ -91,42 +98,53 @@
 		<h1 style="margin: 0; font-family: Cambria;">Modeling inflatable panels</h1>
 	</div>
 	<div>
-		<h2>Nonlinear plate theory</h2>
+		<h2>A plate: basically a doormat</h2>
 		<canvas id="cv1" width=550 height=450>Erreur avec la balise canvas</canvas>
-		<h3>A plate : basically a doormat</h3>
-		<p>	Our goal is to obtain 2D equations that describe our 3D system. Since the geometry of the panel is closer to a 2D body than a 3D one, it seems reasonable to focus our efforts on the two in-plane dimensions.</p>
-		<p>A plate is modeled as a plane onto which a "field" of fibers is attached. Each point of the mid-surface is pierced by a straight line, called the <em>normal fiber</em>. This name is misleading: the fiber is only normal in the initial configuration.
-		We work with the <b>Mindlin–Reissner</b> kinematics assumption:
+		<h3>Why a plate model?</h3>
+		<p>	Our goal is to obtain 2D equations that describe our 3D system. Since the geometry of the panel is closer to a 2D body than it is from a 3D one, it seems reasonable to focus our efforts on the two in-plane dimensions.</p>
+		<h3>Kinematics</h3>
+		<p>A plate is modeled as a plane onto which a "field" of fibers is attached. Each point of the mid-surface $$\vec P$$ is pierced by a straight line called the <em>normal fiber</em> (it is only normal in the initial configuration). The normal fiber is guided by the vector $$\vec a_3$$.</p>
+		<p>We work with the <b>Mindlin–Reissner</b> kinematics assumption:
 		\[ \vec a_3 = \tens R \cdot \vec A_3 \]
-		with $$\tens R = \tens R (\vec P_0)$$ a rotation tensor field and $$\vec A_3 = \vec e_3$$ the initial normal fiber. This means that the fibers behave as rigid bodies; they may rotate but not stretch.
+		with $$\tens R = \tens R (\vec P_0,t)$$ a rotation tensor field and $$\vec A_3 = \vec e_3$$ the initial normal fiber. This means that the fibers behave like rigid bodies: they may rotate but not stretch.
 		</p>
 		<p>This yields the following displacement field:
-		\[\vec U ( \vec Q_0,t ) = \vec U (\vec P_0, t) + Z (\tens R - \tens I) \vec A_3\]
-		<!-- \[ \vec g_i = \derp{\vec Q}{\xi^i} \] --></p>
+		\[\vec U ( \vec Q_0,t ) = \vec U (\vec P_0, t) + Z (\tens R - \tens I) \vec A_3\]</p>
+		<p>$$\vec P_0$$ is the initial position of a point in the <b>mid-surface</b> while $$\vec Q_0$$ is the initial position of a point anywhere inside the plate. $$Z$$ is the the algebraic distance $$\overline{\vec{P_0Q_0}}$$.</p>
 	</div>
 	<div>
 		<canvas id="cv2" width=400 height=300></canvas>
 		<h2>Follower forces</h2>
 		<p>Inflatable structures acquire their rigidity from internal pressure. The surface stress vector $$\vec t$$ is:</p>
 		\[ \vec t = p \vec n \]
-		<p>where $$\vec n$$ is the outward normal vector to the plate's upper or lower face. Its analytical expression is not simple. It is drawn in orange in the animation.</p>
-		<p>The virtual power of the internal pressure forces is expressed as:</p>
-		\[ \mathscr{P}^*_{\text{pressure}} = \int_{\Omega} p \vec n \cdot \vec U^*(\vec Q_0,t) \mathrm d \Omega \]
+		<p>where $$\vec n$$ is the outward normal vector to the plate's upper or lower faces in the current configuration.</p>
+		<p>The animation on the right is a side-view of the plate as the fibers' orientation changes over time. The normal to the mid-surface is drawn in black. The normals for the upper and lower surfaces are drawn in orange.</p>
+		<p>The virtual power of the internal pressure forces is:</p>
+		\[ \mathscr{P}^*_{\text{pressure}} = \int_{S} p \vec n \cdot \vec U^*(\vec Q_0,t) \mathrm d S \]
 		<p>$$\vec n$$ must be calculated in the deformed configuration and written mathematically as a function of quantities defined on the mid-surface. They must also be independent of $$Z$$.</p>
 	</div>
 	<div>
 		<h2>Linearization</h2>
 		<p>The equations are linearized around the <b>deformed configuration</b>.</p>
 	</div>
+
+	<!-- <div>
+		<h2>Experiments</h2>
+		<p>Test the theory by measuring plate deformations with a variety of loads and boundary conditions.</p>
+	</div> -->
 </main>
 
 <footer>
 	<div>
-		<a class="imglink" href="https://www.linkedin.com/in/paul-lacorre-4988b5107/"><img src="img/linkedin-favicon.png" title="Paul Lacorre | LinkedIn"></a>
+		<a class="imglink" href="https://www.univ-nantes.fr/version-francaise/paul-lacorre-2507441.kjsp?RH=INSTITUTIONNEL_FR"><img src="img/un-favicon.png" alt="Logo Université de Nantes" title="Paul LACORRE - Université de Nantes"></a>
 
 		<span class="spacer1"></span>
 
-		<a class="imglink" href="https://github.com/selakant"><img src="img/github-favicon.png" title="selakant • GitHub"></a>
+		<a class="imglink" onclick="window.open('https://www.linkedin.com/in/paul-lacorre-4988b5107/')"><img src="img/linkedin-favicon.png" alt="Logo LinkedIn" title="Paul Lacorre | LinkedIn"></a>
+
+		<span class="spacer1"></span>
+
+		<a class="imglink" href="https://github.com/selakant"><img src="img/github-favicon.png" alt="Logo GitHub" title="selakant • GitHub"></a>
 
 		<span id="contact"></span>
 	</div>
