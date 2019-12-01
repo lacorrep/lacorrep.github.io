@@ -50,6 +50,12 @@ function init2()
 		current_point.X = (evt.clientX - rect.left - Ox).clamp(0,L);
 		current_point.Y = evt.clientY - rect.top - Oy;
 	})
+	cv.addEventListener("touchmove",function(evt){
+		let rect = this.getBoundingClientRect();
+		current_point.X = (evt.touches[0].clientX - rect.left - Ox).clamp(0,L);
+		current_point.Y = evt.touches[0].clientY - rect.top - Oy;
+		evt.preventDefault();
+	})
 
 	// cv.addEventListener("mouseout",function(evt){ current_point.X = 0.33*L;  })
 

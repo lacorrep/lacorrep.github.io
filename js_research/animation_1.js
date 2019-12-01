@@ -13,7 +13,7 @@ let glob = {LX:1.3, LY: 0.6, H:0.4,
 			phi:0.83};
 glob.fiberLength = glob.H/2;
 
-let mouse = {px: 0, py: 0, sensitivity:1/80}; // mouse info (px: previous x, py: previous y, sensitivity)
+let mouse = {px: 0, py: 0, sensitivity:1/100}; // mouse info (px: previous x, py: previous y, sensitivity)
 
 
 function init1()
