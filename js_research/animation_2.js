@@ -1,7 +1,7 @@
 console.log("Script 2 OK")
 
-// I gotta say, this one isn't as impressive as the 3D one. But it is still very informative.
-// It took me 2 hours of tinkering though.
+// I have to say: this one isn't as impressive as the 3D one. But it is still very informative.
+// Also it took me 2 hours of tinkering to get there.
 
 function init2()
 {
@@ -45,19 +45,28 @@ function init2()
 	ctx.translate(Ox,Oy);
 	ctx.lineCap = "round";
 
-	cv.addEventListener("mousemove",function(evt){
-		let rect = this.getBoundingClientRect();
-		current_point.X = (evt.clientX - rect.left - Ox).clamp(0,L);
-		current_point.Y = evt.clientY - rect.top - Oy;
-	})
-	cv.addEventListener("touchmove",function(evt){
+	// Events and interactions
+
+	function mouseEvt(evt)
+	{
+		if( evt.buttons == 1 )
+		{
+			let rect = this.getBoundingClientRect();
+			current_point.X = (evt.clientX - rect.left - Ox).clamp(0,L);
+			current_point.Y = evt.clientY - rect.top - Oy;
+		}
+	}
+	function touchEvt(evt)
+	{
 		let rect = this.getBoundingClientRect();
 		current_point.X = (evt.touches[0].clientX - rect.left - Ox).clamp(0,L);
 		current_point.Y = evt.touches[0].clientY - rect.top - Oy;
 		evt.preventDefault();
-	})
-
-	// cv.addEventListener("mouseout",function(evt){ current_point.X = 0.33*L;  })
+	}
+	cv.addEventListener("mousedown",mouseEvt)
+	cv.addEventListener("mousemove",mouseEvt)
+	cv.addEventListener("touchmove",touchEvt)
+	// cv.addEventListener("mouseout",function(evt){ current_point.X = 0.33*L;  }) // reset current point position when leaving canvas
 
 	// Mechanical transformation
 
