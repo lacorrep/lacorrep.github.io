@@ -33,12 +33,14 @@ function init1()
 		// Store position before the movement begins, otherwise the deltaX and deltaY are wrong
 		mouse.px = evt.touches[0].clientX;
 		mouse.py = evt.touches[0].clientY;
+		evt.preventDefault();
 	})
 	cv1.addEventListener("touchmove",function(evt){
 		glob.phi += mouse.sensitivity*(evt.touches[0].clientX-mouse.px);
 		glob.theta += mouse.sensitivity*(evt.touches[0].clientY-mouse.py);
 		mouse.px = evt.touches[0].clientX;
 		mouse.py = evt.touches[0].clientY;
+		evt.preventDefault();
 	})
 
 	// Sometimes in panick the user will double click and that would reset the view. Incompatible with the way I handle "touch" on mobiles.
