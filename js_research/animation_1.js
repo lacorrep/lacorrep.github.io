@@ -68,9 +68,6 @@ function init1()
 	renderer1.gammaOutput = true;
 	renderer1.shadowMap.enabled = true;
 
-	let t = 0; // time variable
-	const dt = 0.05; // time step
-
 	const A1 = 0.7; // amplitude of shear
 	const A2 = 0.2; // amplitude of bending
 	const A3 = 0.3; // frequency
@@ -167,6 +164,8 @@ function init1()
 
 	function animate1()
 	{
+		let t = Date.now()/300;
+
 		if( glob.plate_config == 0)
 		{
 			for( let i = 0, l = S0.vertices.length; i < l; i++ )
@@ -256,7 +255,6 @@ function init1()
 		SceneObjects.rotation.z = glob.phi;
 		SceneObjects.rotation.x = glob.theta;
 
-		t += dt;
 		renderer1.render( scene1, camera1 );
 		requestAnimationFrame( animate1 );
 	}

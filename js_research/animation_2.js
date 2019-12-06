@@ -12,9 +12,6 @@ function init2()
 	const bending_amp = 80;
 	const normals_length = 50;
 
-	let t = 0;
-	const dt = 0.01;
-
 	// Plate geometry
 
 	const N = 13;
@@ -99,6 +96,8 @@ function init2()
 
 	function render2()
 	{
+		let t = Date.now()/700;
+
 		ctx.clearRect(-Ox,-Oy,cv.width,cv.height);
 
 		ctx.lineWidth = 1;
@@ -219,7 +218,6 @@ function init2()
 		ctx.stroke();
 		ctx.restore();
 
-		t += dt;
 		requestAnimationFrame(render2);
 	}
 	render2();

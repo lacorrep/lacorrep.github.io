@@ -65,8 +65,8 @@
 <!-- LaTeX macros -->
 <div style="display: none;">
 	\[
-		\gdef{\vec}{\mathbf}
-		\gdef{\tens}{\mathbf}
+		\gdef{\vec}{\pmb}
+		\gdef{\tens}{\pmb}
 		\gdef\derp#1#2{\dfrac{\partial #1}{\partial #2}}
 	\]
 </div>
@@ -93,7 +93,7 @@
 		<h1 style="margin: 0; color: white;">Modeling inflatable panels</h1>
 	</div>
 	<div>
-		<h2>A plate: basically a doormat</h2>
+		<h2>Plate theory</h2>
 		<canvas id="cv1" width=550 height=450>Erreur avec la balise canvas</canvas>
 		<h3>Why a plate model?</h3>
 		<p>	Our goal is to obtain 2D equations that describe our 3D system. Since the geometry of the panel is closer to a 2D body than it is from a 3D one, it seems reasonable to focus our efforts on the two in-plane dimensions.</p>
@@ -119,14 +119,22 @@
 		<p>$$\vec n$$ must be calculated in the deformed configuration and written mathematically as a function of quantities defined on the mid-surface. They must also be independent of $$Z$$.</p>
 	</div>
 	<div>
-		<h2>Linearization</h2>
-		<p>The equations are linearized around the <b>deformed configuration</b>.</p>
-	</div>
+		<h2>Consitutive law</h2>
+		<h3>Saint Venant-Kirchhoff material</h3>
+		<p>Since we are building a nonlinear theory, we need a constitutive law that is compatible with large deformations.
+		\[ \tens \Sigma = \tens \Sigma_0 + \mathbb{D} : \tens E \]
+		If the material is assumed to be <b>isotropic</b>:
+		\[ \tens \Sigma = \tens \Sigma_0 + 2 \mu \tens E + \lambda (\operatorname{tr} \tens E) \tens I \]</p>
 
-	<!-- <div>
+	</div>
+	<div>
+		<h2>Linearization</h2>
+		<p>The equations are linearized around the <b>deformed configuration</b>. The displacement field $$\vec U$$ and its derivatives (with respect to space or time) are assumed to be <b>infinitesimal of the first order</b>.</p>
+	</div>
+	<div>
 		<h2>Experiments</h2>
-		<p>Test the theory by measuring plate deformations with a variety of loads and boundary conditions.</p>
-	</div> -->
+		<p>We will test the theory by measuring plate deformations with a variety of loads and boundary conditions.</p>
+	</div>
 </main>
 
 <footer>
