@@ -133,7 +133,7 @@ function init1()
 			new THREE.Vector3( ver.x, ver.y, 1 )
 		);
 	}
-	let m_fibers = new THREE.LineBasicMaterial( { color: c_fibers , linewidth: 3 } );
+	let m_fibers = new THREE.LineBasicMaterial( { color: c_fibers , linewidth: 2 } );
 	let fibers = new THREE.LineSegments(g_fibers, m_fibers);
 	SceneObjects.add(fibers)
 
