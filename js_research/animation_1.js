@@ -63,6 +63,8 @@ function init1()
 	camera1.lookAt(0,0,0);
 
 	let renderer1 = new THREE.WebGLRenderer( { alpha: true, antialias: true, canvas: cv1 } );
+	renderer1.setPixelRatio( Math.min(2,window.devicePixelRatio) );
+	console.log(window.devicePixelRatio);
 	renderer1.setSize( W, H );
 	renderer1.gammaInput = true;
 	renderer1.gammaOutput = true;
@@ -131,7 +133,7 @@ function init1()
 			new THREE.Vector3( ver.x, ver.y, 1 )
 		);
 	}
-	let m_fibers = new THREE.LineBasicMaterial( { color: c_fibers , linewidth: 2 } );
+	let m_fibers = new THREE.LineBasicMaterial( { color: c_fibers , linewidth: 3 } );
 	let fibers = new THREE.LineSegments(g_fibers, m_fibers);
 	SceneObjects.add(fibers)
 
@@ -266,7 +268,6 @@ function init1()
 		requestAnimationFrame( animate1 );
 	}
 	animate1();
-
 
 	function resize()
 	{

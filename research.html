@@ -5,10 +5,22 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 	<link rel="stylesheet" href="layout.css"/>
 	<link rel="stylesheet" href="theme1.css"/>
 	<style>
+		.big-white-title
+		{
+			text-align: center;
+			padding: 0;
+			background: none;
+			font-size: calc(1.5em + 1.3vw);
+		}
+		.big-white-title h1
+		{
+			margin: 0;
+			color: white;
+		}
 		main > div
 		{
 			text-align: left;
@@ -24,7 +36,6 @@
 		{
 			cursor: -webkit-grab;
 			cursor: grab;
-
 		}
 		#cv1:active
 		{
@@ -35,9 +46,34 @@
 		{
 			cursor: pointer;
 		}
+
+		/* Canvas centering */
+
+		@media only screen and (max-width: 1000px) and (min-width: 500px)
+		{
+			canvas
+			{
+				float: none;
+				display: block;
+				margin: auto;
+			}
+		}
+
+		/* KaTeX */
+
 		.katex-html
 		{
 			pointer-events: none;
+		}
+
+		/* Affichage smartphone */
+
+		@media only screen and (max-width: 1000px)
+		{
+			.katex-display
+			{
+				font-size: calc(0.7em + 1vmin);
+			}
 		}
 	</style>
 	<link rel="icon" href="img/favicon-32.png" sizes="32x32">
@@ -66,8 +102,8 @@
 <!-- LaTeX macros -->
 <div style="display: none;">
 	\[
-		\gdef{\vec}{\pmb}
-		\gdef{\tens}{\pmb}
+		\gdef{\vec}{\mathbf}
+		\gdef{\tens}{\mathbf}
 		\gdef\derp#1#2{\dfrac{\partial #1}{\partial #2}}
 	\]
 </div>
@@ -90,8 +126,8 @@
 
 <!-- Main content -->
 <main>
-	<div style="text-align: center; font-size: 2.5em; padding: 0; background: none;">
-		<h1 style="margin: 0; color: white;">Modeling inflatable panels</h1>
+	<div class="big-white-title">
+		<h1>Modeling inflatable panels</h1>
 	</div>
 	<div>
 		<h2>Plate theory</h2>
@@ -109,8 +145,8 @@
 		<p>$$\vec P_0$$ is the initial position of a point in the <b>mid-surface</b> while $$\vec Q_0$$ is the initial position of a point anywhere inside the plate. $$Z$$ is the the algebraic distance $$\overline{\vec{P_0Q_0}}$$.</p>
 	</div>
 	<div>
-		<canvas id="cv2" width=400 height=300></canvas>
 		<h2>Follower forces</h2>
+		<canvas id="cv2" width=400 height=290></canvas>
 		<p>Inflatable structures acquire their rigidity from internal pressure. The surface stress vector $$\vec t$$ is:</p>
 		\[ \vec t = p \vec n \]
 		<p>where $$\vec n$$ is the outward normal vector to the plate's upper or lower faces in the current configuration.</p>

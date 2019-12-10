@@ -6,6 +6,8 @@ console.log("Script 2 OK")
 function init2()
 {
 
+	let ratio = 1;
+
 	// Rendering options
 
 	const shear_angle_amp = 5;
@@ -15,7 +17,7 @@ function init2()
 	// Plate geometry
 
 	const N = 13;
-	const L = 380;
+	const L = 350;
 	const H = 70;
 
 	let plate = {x: new Array(N), y: new Array(N)};
@@ -38,7 +40,7 @@ function init2()
 
 	let cv = document.getElementById("cv2");
 	let ctx = cv.getContext('2d');
-	const Ox = 10, Oy = 0.6*cv.height; // origine
+	const Ox = 10, Oy = 170; // origine
 	ctx.translate(Ox,Oy);
 	ctx.lineCap = "round";
 
@@ -49,15 +51,15 @@ function init2()
 		if( evt.buttons == 1 )
 		{
 			let rect = this.getBoundingClientRect();
-			current_point.X = (evt.clientX - rect.left - Ox).clamp(0,L);
-			current_point.Y = evt.clientY - rect.top - Oy;
+			current_point.X = (evt.clientX - rect.left - Ox).clamp(0,L*ratio) / ratio;
+			current_point.Y = (evt.clientY - rect.top - Oy) / ratio;
 		}
 	}
 	function touchEvt(evt)
 	{
 		let rect = this.getBoundingClientRect();
-		current_point.X = (evt.touches[0].clientX - rect.left - Ox).clamp(0,L);
-		current_point.Y = evt.touches[0].clientY - rect.top - Oy;
+		current_point.X = (evt.touches[0].clientX - rect.left - Ox).clamp(0,L*ratio) / ratio;
+		current_point.Y = (evt.touches[0].clientY - rect.top - Oy ) / ratio;
 		evt.preventDefault();
 	}
 	cv.addEventListener("mousedown",mouseEvt)
@@ -131,7 +133,7 @@ function init2()
 		// Fibers
 
 		ctx.strokeStyle = 'rgba(0,102,255,0.9)';
-		ctx.lineWidth = 0.7;
+		ctx.lineWidth = 1;
 		for(let i = 0, l = plate.x.length; i <= l; i++)
 		{
 			let Qsup = transformation(plate.x[i], plate.y[i], t)
@@ -221,6 +223,15 @@ function init2()
 		requestAnimationFrame(render2);
 	}
 	render2();
+
+	function resize()
+	{
+		let Lmin = cv.parentElement.clientWidth-2*24;
+		ratio = Math.min(Lmin/cv.width,1);
+		cv.style = "transform: scale("+ratio+"); transform-origin: top right; margin-bottom: -"+(0.95-ratio)*cv.height+"px;";
+	}
+	window.addEventListener("resize",resize);
+	resize();
 }
 init2();
 

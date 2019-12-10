@@ -13,9 +13,9 @@
 
 html
 {
-	/*background: var(--blue-one);*/
 	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#527dc8+1,81ddff+100 */
 	background: #527dc8; /* Old browsers */
+	background: var(--blue-one); /* in case var(--blue-one) is changed and the browser is old*/
 	background: -moz-linear-gradient(45deg, var(--blue-one) 1%, var(--blue-two) 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(45deg, var(--blue-one) 1%,var(--blue-two) 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(45deg, var(--blue-one) 1%,var(--blue-two) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
@@ -23,6 +23,23 @@ html
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#527dc8', endColorstr='#81ddff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 	background-repeat: no-repeat;
 
+}
+
+a
+{
+	color: inherit;
+	text-decoration: none;
+	cursor: pointer;
+	
+	transition: color 0.15s ease-in-out;
+	-moz-transition: color 0.15s ease-in-out;
+	-o-transition: color 0.15s ease-in-out;
+	-webkit-transition: color 0.15s ease-in-out;
+}
+
+a:hover
+{
+	color: black;
 }
 
 header a
