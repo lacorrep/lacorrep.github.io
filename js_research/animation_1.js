@@ -8,7 +8,7 @@ let glob = {LX:1.3, LY: 0.6, H:0.4,
 			plate_config: 1, // 0 : initial ; 1 : deformed
 			showFibers: true,
 			showEnvelop: true,
-			envelop_alpha: 0.7,
+			envelop_alpha: 0.65,
 			theta:-0.28,
 			phi:0.83};
 glob.fiberLength = glob.H/2;
@@ -88,7 +88,7 @@ function init1()
 
 	// GEOMETRIES -----------------------------------------------------
 
-	let plane_resolution = 50; // # subdivisions of the plane
+	let plane_resolution = 10; // # subdivisions of the plane
 	let fibers_resolution = 3; // # subdivisions of the plane for planting fibers
 
 	let SceneObjects = new THREE.Group();
@@ -135,15 +135,20 @@ function init1()
 	let fibers = new THREE.LineSegments(g_fibers, m_fibers);
 	SceneObjects.add(fibers)
 
-	// Frame of reference
+	// Frame of reference (basis)
 
-	let origin = new THREE.Vector3( 0.2*glob.LX, 2.5*glob.LY, -0.5*glob.H );
-	let arrow_X = new THREE.ArrowHelper( new THREE.Vector3(-1, 0,0), origin, 0.5, "#000" );
-	let arrow_Y = new THREE.ArrowHelper( new THREE.Vector3( 0,-1,0), origin, 0.5, "#000" );
-	let arrow_Z = new THREE.ArrowHelper( new THREE.Vector3( 0, 0,1), origin, 0.5, "#000" );
-	SceneObjects.add( arrow_X );
-	SceneObjects.add( arrow_Y );
-	SceneObjects.add( arrow_Z );
+	let grpBase = new THREE.Group();
+	scene1.add(grpBase);
+	grpBase.rotation.z = 0.5;
+	grpBase.position.set(-1.3, 1, 0.4);
+
+	let origin = new THREE.Vector3(0,0,0);
+	let arrow_X = new THREE.ArrowHelper( new THREE.Vector3(-1, 0,0), origin, 0.36, "#800" );
+	let arrow_Y = new THREE.ArrowHelper( new THREE.Vector3( 0,-1,0), origin, 0.36, "#080" );
+	let arrow_Z = new THREE.ArrowHelper( new THREE.Vector3( 0, 0,1), origin, 0.36, "#008" );
+	grpBase.add( arrow_X );
+	grpBase.add( arrow_Y );
+	grpBase.add( arrow_Z );
 
 
 	// FUNCTIONS -----------------------------------------------------
@@ -189,7 +194,7 @@ function init1()
 		}
 		// Update deformed mid-surface
 		S.verticesNeedUpdate = true;
-		S.computeVertexNormals();
+		S.computeFaceNormals();
 
 		// Will not be necessary at every frame (for when the deformed shape isn't time dependent)
 		plate.visible = glob.showEnvelop;
@@ -218,7 +223,7 @@ function init1()
 			}
 			// Update deformation
 			g_plate.verticesNeedUpdate = true;
-			g_plate.computeVertexNormals(true); // true is optional
+			g_plate.computeFaceNormals();
 		}
 		plate.material.opacity = glob.envelop_alpha;
 
@@ -251,9 +256,11 @@ function init1()
 			g_fibers.verticesNeedUpdate = true;
 		}
 
-		// Update rotation
+		// Update rotations
 		SceneObjects.rotation.z = glob.phi;
 		SceneObjects.rotation.x = glob.theta;
+		grpBase.rotation.z = glob.phi;
+		grpBase.rotation.x = glob.theta;
 
 		renderer1.render( scene1, camera1 );
 		requestAnimationFrame( animate1 );
