@@ -114,6 +114,11 @@ h1, h2
 	font-weight: 500;
 }
 
+h3
+{
+	margin-top: 0.6em;
+}
+
 main div h2
 {
 	font-family: 'Roboto', sans-serif;
@@ -131,16 +136,9 @@ main>div h1
 	width: 100%;
 }
 
-#intro p
+ul
 {
-	text-align: center;
-	font-size: 1.3em;
-	margin: 1em;
-}
-
-#resources a
-{
-	text-decoration: underline;
+	padding-left: 2em;
 }
 
 footer
@@ -198,15 +196,15 @@ footer
 
 @media only screen and (min-width: 650px) /* above 650px */
 {
-	.spacer2
-	{
-		display:inline-block;
-		width:8em;
-	}
 	.spacer1
 	{
 		display:inline-block;
 		width:50pt;
+	}
+	.spacer2
+	{
+		display:inline-block;
+		width:8em;
 	}
 }
 
@@ -260,6 +258,9 @@ footer
 
 		padding: 1.5em;
 		margin-bottom: 20pt;
+
+		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 
 }

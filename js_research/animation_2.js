@@ -158,7 +158,6 @@ function init2()
 		ctx.stroke();
 
 		// Current point
-
 		// ctx.fillStyle = '#fff';
 		// let current_point_image = transformation(current_point.X,0,t);
 		// ctx.beginPath();
