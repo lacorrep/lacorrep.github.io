@@ -117,6 +117,7 @@
 	<nav>
 		<ul>
 			<a href=""><li>Research</li></a>
+			<a href="teaching.html"><li>Teaching</li></a>
 			<!-- <a href="#projects"><li>Projects</li></a> -->
 			<!-- <a href="index.html#resources"><li>Resources</li></a> -->
 			<a href="#contact" onclick="showContactForm()"><li>Contact</li></a>
@@ -156,7 +157,7 @@
 	</div>
 	<div>
 		<h2>Plate theory</h2>
-		<canvas id="cv1" width=550 height=450>CANVAS ERROR!</canvas>
+		<canvas id="cv1" width=550 height=450>(CANVAS ERROR)</canvas>
 		<h3>Why a plate model?</h3>
 		<p>	Our goal is to obtain 2D equations that describe our 3D system. Since the geometry of the panel is closer to a 2D body than it is from a 3D one, it seems reasonable to focus our efforts on the two in-plane dimensions.</p>
 		<h3>Kinematics</h3>
@@ -171,7 +172,7 @@
 	</div>
 	<div>
 		<h2>Follower forces</h2>
-		<canvas id="cv2" width=400 height=290>CANVAS ERROR!</canvas>
+		<canvas id="cv2" width=400 height=290>(CANVAS ERROR)</canvas>
 		<p>Inflatable structures acquire their rigidity from internal pressure. The surface stress vector $$\vec t$$ is:</p>
 		\[ \vec t = p \vec n \]
 		<p>where $$\vec n$$ is the outward normal vector to the plate's upper or lower faces in the current configuration (drawn in orange).</p>
@@ -191,17 +192,28 @@
 	</div>
 	<div>
 		<h2>Linearization</h2>
-		<p>The equations are linearized around the <b>deformed configuration</b>. The displacement field $$\vec U$$ and its derivatives (with respect to space or time) are assumed to be <b>infinitesimal of the first order</b>.</p>
+		<p>The equations are linearized around the <b>reference configuration</b> (inflated). The displacement field $$\vec U$$ and its derivatives (with respect to space or time) are assumed to be <b>infinitesimal of the first order</b>.</p>
+	</div>
+	<div>
+		<h2>Free vibration analysis</h2>
+		<p>The vibrations of thick plates are described by the oscillations of the three quantities that describe the current configuration: $$W$$, $$\psi_r$$, $$\psi_\theta$$.
+		As a result, to each natural frequency $$f_{mn}$$ correspond 3 wave numbers $$k_1$$, $$k_2$$, $$k_3$$.
+		There exists a coupling between flexural modes, thickness-shear modes ($$\psi_r$$) and thickness-twist modes ($$\psi_\theta$$).
+		Another interesting phenomenon is the existence of a cut-off frequency that separates the low-frequency modes from the high-frequency modes, giving rise to distinct mode shapes.</p>
 	</div>
 	<div>
 		<h2>Experiments</h2>
 		<p>We will test the theory by measuring plate deformations with a variety of shapes, loads and boundary conditions.</p>
 	</div>
+	<div>
+		<h2>Finite element</h2>
+		<p>The nonlinear expression of the PVP can be discretized to create nonlinear finite elements dedicated to modeling inflatable panels using flat elements.</p>
+	</div>
 </main>
 
 <footer>
 	<div>
-		<a class="imglink" href="https://www.univ-nantes.fr/version-francaise/paul-lacorre-2507441.kjsp?RH=INSTITUTIONNEL_FR"><img src="img/un-favicon.png" alt="Logo Université de Nantes" title="Paul LACORRE - Université de Nantes"></a>
+		<a class="imglink" href="https://www.univ-nantes.fr/version-francaise/paul-lacorre-2507441.kjsp?RH=INSTITUTIONNEL_FR"><img src="img/nu-favicon-large.png" alt="Logo Nantes Université" title="Paul LACORRE - Nantes Université"></a>
 
 		<span class="spacer1"></span>
 

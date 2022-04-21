@@ -1,0 +1,401 @@
+<script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
+<script>
+// https://www.openprocessing.org/sketch/1080777
+// WEBGL: you must load and set a font before drawing text. See `loadFont` and `textFont` for more details.
+
+// Options d'animation
+let options = {
+	"moment_rotation_speed": 5,
+	"moment_scale": 5,
+	"moment_arrow_girth": 0.7,
+	"poutre_resolution": 32 // 4 : triangle, 5 : carré (tourné de 45°), 32 : cercle
+};
+
+// Vue initiale
+let viewRotationX = 1.46;
+let viewRotationZ = 0.28;
+let viewTranslationX = -55;
+let viewTranslationY = 0;
+let zoom = 4;
+
+// Géométrie de la poutre
+const longueur = 300;
+const rayon = 9;
+
+// Coupure (position et écartement)
+let s = 50;
+
+// Composantes intérieures
+let slider_N;
+let slider_Ty;
+let slider_Tz;
+let slider_Mt;
+let slider_Mfy;
+let slider_Mfz;
+
+// Initialisation
+function setup() {
+	setAttributes('antialias', true);
+	var myCanvas = createCanvas(450, 300, WEBGL);
+	myCanvas.style('display', 'block');
+	myCanvas.attribute('alt', 'Cette animation utilise des scripts JavaScript pour fonctionner. JavaScript est-il désactivé dans votre naviagteur ? Utilisez-vous un bloqueur de pub ? Merci de contacter le développeur sinon.'); // message alternatif
+	myCanvas.attribute('html', "Erreur : le canvas n'a pas pu être affiché."); // message alternatif
+	myCanvas.parent("p5applet-canvas");
+	myCanvas.elt.addEventListener('contextmenu', event => event.preventDefault()); // ne pas afficher le menu clic-droit
+	// myCanvas.elt.oncontextmenu = function() { return false; } // autre façon de ne pas afficher le menu clic-droit
+	myCanvas.elt.addEventListener('wheel', event => event.preventDefault()); // ne pas scroller
+	myCanvas.elt.onmousedown = event => {if(event.button==1) event.preventDefault()}; // empêche le cliquer-défiler (fonctionne seulement avec l'attribut JS onmousedown)
+
+	const label_N   = createDiv('Effort normal N')
+	const label_Ty  = createDiv('Effort tranchant Ty')
+	const label_Tz  = createDiv('Effort tranchant Tz')
+	const label_Mt  = createDiv('Moment de torsion Mt')
+	const label_Mfy = createDiv('Moment de flexion Mfy')
+	const label_Mfz = createDiv('Moment de flexion Mfz')
+
+	label_N.parent("p5applet")
+	label_Ty.parent("p5applet")
+	label_Tz.parent("p5applet")
+	label_Mt.parent("p5applet")
+	label_Mfy.parent("p5applet")
+	label_Mfz.parent("p5applet")
+
+	slider_N   = createSlider(-0.6,0.6, 0.4, 0.01);
+	slider_Ty  = createSlider(-0.6,0.6, 0.3, 0.01);
+	slider_Tz  = createSlider(-0.6,0.6, 0.0, 0.01);
+	slider_Mt  = createSlider(-0.3,0.3, 0.0, 0.01);
+	slider_Mfy = createSlider(-0.3,0.3, 0.0, 0.01);
+	slider_Mfz = createSlider(-0.3,0.3, 0.1, 0.01);
+
+	slider_N.style(  'width','200px')
+	slider_Ty.style( 'width','200px')
+	slider_Tz.style( 'width','200px')
+	slider_Mt.style( 'width','200px')
+	slider_Mfy.style('width','200px')
+	slider_Mfz.style('width','200px')
+
+	slider_N.style(  'position','absolute')
+	slider_Ty.style( 'position','absolute')
+	slider_Tz.style( 'position','absolute')
+	slider_Mt.style( 'position','absolute')
+	slider_Mfy.style('position','absolute')
+	slider_Mfz.style('position','absolute')
+
+	slider_N.style(  'left','17em')
+	slider_Ty.style( 'left','17em')
+	slider_Tz.style( 'left','17em')
+	slider_Mt.style( 'left','17em')
+	slider_Mfy.style('left','17em')
+	slider_Mfz.style('left','17em')
+
+	// slider_N.doubleClicked(   () => {slider_N.value(0)});
+	// slider_Ty.doubleClicked(  () => {slider_Ty.value(0)});
+	// slider_Tz.doubleClicked(  () => {slider_Tz.value(0)});
+	// slider_Mt.doubleClicked(  () => {slider_Mt.value(0)});
+	// slider_Mfy.doubleClicked( () => {slider_Mfy.value(0)});
+	// slider_Mfz.doubleClicked( () => {slider_Mfz.value(0)});
+	
+	slider_N.mouseWheel(   (e) => {    slider_N.value(slider_N.value() - e.deltaY/1000); e.preventDefault()});
+	slider_Ty.mouseWheel(  (e) => {  slider_Ty.value(slider_Ty.value() - e.deltaY/1000); e.preventDefault()});
+	slider_Tz.mouseWheel(  (e) => {  slider_Tz.value(slider_Tz.value() - e.deltaY/1000); e.preventDefault()});
+	slider_Mt.mouseWheel(  (e) => {  slider_Mt.value(slider_Mt.value() - e.deltaY/1000); e.preventDefault()});
+	slider_Mfy.mouseWheel( (e) => {slider_Mfy.value(slider_Mfy.value() - e.deltaY/1000); e.preventDefault()});
+	slider_Mfz.mouseWheel( (e) => {slider_Mfz.value(slider_Mfz.value() - e.deltaY/1000); e.preventDefault()});
+	
+	slider_N.parent(label_N)
+	slider_Ty.parent(label_Ty)
+	slider_Tz.parent(label_Tz)
+	slider_Mt.parent(label_Mt)
+	slider_Mfy.parent(label_Mfy)
+	slider_Mfz.parent(label_Mfz)
+
+	// Boutons RESET
+
+	reset_N   = createButton("Z");
+	reset_Ty  = createButton("Z");
+	reset_Tz  = createButton("Z");
+	reset_Mt  = createButton("Z");
+	reset_Mfy = createButton("Z");
+	reset_Mfz = createButton("Z");
+
+	reset_N.style(  'position','absolute')
+	reset_Ty.style( 'position','absolute')
+	reset_Tz.style( 'position','absolute')
+	reset_Mt.style( 'position','absolute')
+	reset_Mfy.style('position','absolute')
+	reset_Mfz.style('position','absolute')
+	reset_N.style(  'left','14em')
+	reset_Ty.style( 'left','14em')
+	reset_Tz.style( 'left','14em')
+	reset_Mt.style( 'left','14em')
+	reset_Mfy.style('left','14em')
+	reset_Mfz.style('left','14em')
+	reset_N.style(  'padding','0px 4px')
+	reset_Ty.style( 'padding','0px 4px')
+	reset_Tz.style( 'padding','0px 4px')
+	reset_Mt.style( 'padding','0px 4px')
+	reset_Mfy.style('padding','0px 4px')
+	reset_Mfz.style('padding','0px 4px')
+	reset_N.style(  'border','0px')
+	reset_Ty.style( 'border','0px')
+	reset_Tz.style( 'border','0px')
+	reset_Mt.style( 'border','0px')
+	reset_Mfy.style('border','0px')
+	reset_Mfz.style('border','0px')
+	reset_N.style(  'border-radius','5px')
+	reset_Ty.style( 'border-radius','5px')
+	reset_Tz.style( 'border-radius','5px')
+	reset_Mt.style( 'border-radius','5px')
+	reset_Mfy.style('border-radius','5px')
+	reset_Mfz.style('border-radius','5px')
+
+	reset_N.mouseClicked(  () => {slider_N.value(0)});
+	reset_Ty.mouseClicked( () => {slider_Ty.value(0)});
+	reset_Tz.mouseClicked( () => {slider_Tz.value(0)});
+	reset_Mt.mouseClicked( () => {slider_Mt.value(0)});
+	reset_Mfy.mouseClicked(() => {slider_Mfy.value(0)});
+	reset_Mfz.mouseClicked(() => {slider_Mfz.value(0)});
+
+	reset_N.parent(label_N)
+	reset_Ty.parent(label_Ty)
+	reset_Tz.parent(label_Tz)
+	reset_Mt.parent(label_Mt)
+	reset_Mfy.parent(label_Mfy)
+	reset_Mfz.parent(label_Mfz)
+
+	// textFont(fontRegular);
+	
+	noStroke();
+
+	//ortho() // perspective() par défaut
+}
+
+// Boucle de rendu
+function draw() {
+	background(255);
+
+	/* CAMERA */
+
+	// Panning
+	translate(viewTranslationX, viewTranslationY, 0);
+
+	// Rotation
+	translate(0.7*s, 0, 0); // POUR QUE LA ROTATION SE FASSE AUTOUR DU BON POINT
+	scale(zoom);
+	rotateX(viewRotationX);
+	rotateZ(viewRotationZ);
+	translate(-0.7*s, 0, 0); // POUR QUE LA ROTATION SE FASSE AUTOUR DU BON POINT
+
+	// basé sur lights()
+	ambientLight(120);
+	directionalLight(150, 150, 150, 0, 0.5, -1); // rgb, XYZ
+	directionalLight(40, 40, 40, -0.5, -0.5, 1);
+
+
+	/* FORCES EXTERIEURES */
+
+	// const F = 2;
+	// effortsInterieurs(0, 0, 0, 0, F, 0, 0, 0, 0, '#000');
+	// effortsInterieurs(longueur * 0.25, shift_to_back(longueur * 0.25), 0, 0, -F, 0, 0, 0, 0, '#000');
+
+	/* EFFORTS INTERIEURS */
+
+	const N = slider_N.value();
+	const Ty = slider_Ty.value();
+	const Tz = slider_Tz.value();
+	const Mt = slider_Mt.value();
+	const Mfy = slider_Mfy.value();
+	const Mfz = slider_Mfz.value();
+	effortsInterieurs(s, 0, 0, N, Ty, Tz, options.moment_scale*Mt, options.moment_scale*Mfy, options.moment_scale*Mfz);
+	
+	// efforts sur la partie (+)
+	// effortsInterieurs(s+40, 0, 0, -N, -Ty, -Tz, -options.moment_scale*Mt, -options.moment_scale*Mfy, -options.moment_scale*Mfz ,'#aaa');
+
+
+	/* POUTRE */
+
+	// partie (-)
+
+	push()
+	fill(200,200);
+	translate(s / 2, 0, 0);
+	rotateZ(HALF_PI); // cylinder() est orienté vers Y par défaut
+	cylinder(rayon, s, options.poutre_resolution, 1);
+	pop()
+}
+
+
+/* -------------------------------------------------- FIN DE DRAW -------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+/* FONCTIONS DE DESSIN */
+
+function arrow(rayon_cylindre, hauteur_cylindre, rayon_fleche, hauteur_fleche) {
+	rotateZ(-HALF_PI);
+	translate(0, hauteur_cylindre / 2, 0);
+	cylinder(rayon_cylindre, hauteur_cylindre, 8, 1);
+	translate(0, hauteur_cylindre / 2 + hauteur_fleche / 2);
+	cone(rayon_fleche, hauteur_fleche, 16, 1);
+}
+
+function effortsInterieurs(X, Y, Z, N, Ty, Tz, Mt, Mfy, Mfz, couleur) {
+
+	// display parameters
+	const moment_arrow_radius = 2;
+	const moment_arrow_height = 5;
+
+	push();
+
+	translate(X, Y, Z);
+
+	/* FORCES */
+
+	if (N != 0) {
+		push();
+		fill(255, 50, 20);
+		if (couleur) fill(couleur);
+		arrow(options.moment_arrow_girth, N * 25, moment_arrow_radius, Math.sign(N) * moment_arrow_height);
+		pop();
+	}
+	if (Ty != 0) {
+		push();
+		rotateY(-HALF_PI);
+		fill(110, 255, 20);
+		if (couleur) fill(couleur);
+		arrow(options.moment_arrow_girth, Ty * 25, moment_arrow_radius, Math.sign(Ty) * moment_arrow_height);
+		pop();
+	}
+	if (Tz != 0) {
+		push();
+		rotateZ(HALF_PI);
+		fill(20, 110, 255);
+		if (couleur) fill(couleur);
+		arrow(options.moment_arrow_girth, Tz * 25, moment_arrow_radius, Math.sign(Tz) * moment_arrow_height);
+		pop();
+	}
+
+	/* MOMENTS */
+
+	if (Mt != 0) {
+		push();
+		fill(255, 50, 20);
+		if (couleur) fill(couleur);
+		translate(15, 0, 0);
+		rotateY(HALF_PI);
+		torus(Math.abs(Mt) * 10, options.moment_arrow_girth, 48, 8);
+		// flèche
+		rotateZ(-Math.sign(Mt) * options.moment_rotation_speed * millis() / 1000); // animation
+		translate(Mt * 10, 0, 0);
+		rotateZ(PI);
+		cone(moment_arrow_radius, moment_arrow_height, 16, 1)
+		pop();
+	}
+	if (Mfy != 0) {
+		push();
+		fill(110, 255, 20);
+		if (couleur) fill(couleur);
+		translate(0, 0, 15);
+		torus(Math.abs(Mfy) * 10, options.moment_arrow_girth, 48, 8);
+		// flèche
+		rotateZ(-Math.sign(Mfy) * options.moment_rotation_speed * millis() / 1000); // animation
+		translate(Mfy * 10, 0, 0);
+		rotateZ(PI);
+		cone(moment_arrow_radius, moment_arrow_height, 16, 1)
+		pop();
+	}
+	if (Mfz != 0) {
+		push();
+		fill(20, 110, 255);
+		if (couleur) fill(couleur);
+		translate(0, 15, 0);
+		rotateX(-HALF_PI);
+		torus(Math.abs(Mfz) * 10, options.moment_arrow_girth, 48, 8);
+		// flèche
+		rotateZ(-Math.sign(Mfz) * options.moment_rotation_speed * millis() / 1000); // animation
+		translate(Mfz * 10, 0, 0);
+		rotateZ(PI);
+		cone(moment_arrow_radius, moment_arrow_height, 16, 1)
+		pop();
+	}
+
+	pop();
+}
+
+
+/* VIEW */
+
+function mouseDragged() {
+	// if the cursor is in the canvas
+	if( 0 < mouseX && mouseX < width && 0 < mouseY && mouseY < height )
+	{
+		// orient view
+		if (mouseButton === LEFT ) {
+			viewRotationX -= TWO_PI * movedY / height;
+			viewRotationZ -= TWO_PI * movedX / width;
+			console.log(viewRotationX, viewRotationZ)
+		}
+		if (mouseButton === RIGHT || mouseButton === CENTER) {
+			// if( abs(movedX) < 20 )
+				viewTranslationX += movedX;
+			// if( abs(movedY) < 20 )
+				viewTranslationY += movedY;
+			viewTranslationX = constrain(viewTranslationX,-280,100);
+			viewTranslationY = constrain(viewTranslationY,-160,130);
+			console.log(viewTranslationX, viewTranslationY)
+		}
+	}
+}
+
+function doubleClicked() {
+	if( 0 < mouseX && mouseX < width && 0 < mouseY && mouseY < height )
+	{
+		viewRotationX = 1.46;
+		viewRotationZ = 0.28;
+		viewTranslationX = -55;
+		viewTranslationY = 0;
+	}
+}
+
+// remplace mouseDragged() sur les appareils tactiles
+function touchMoved() {
+	const movedX = mouseX-pmouseX;
+	const movedY = mouseY-pmouseY;
+	// if the cursor is in the canvas
+	if( 0 < mouseX && mouseX < width && 0 < mouseY && mouseY < height )
+	{
+		// orient view
+		if (touches.length==1) {
+			viewRotationX -= TWO_PI * movedY / height;
+			viewRotationZ -= TWO_PI * movedX / width;
+			console.log(viewRotationX, viewRotationZ)
+		}
+		if (touches.length==2) {
+			viewTranslationX += movedX;
+			viewTranslationY += movedY;
+			console.log(viewTranslationX, viewTranslationY)
+		}
+	}
+}
+
+function mouseWheel(event) {
+	if( 0 < mouseX && mouseX < width && 0 < mouseY && mouseY < height )
+	{
+		zoom *= 1 - 0.1 * Math.sign(event.delta);
+	}
+}
+
+</script>
+
+<!-- <div style="text-align: center;"> -->
+<div id="p5applet" style="text-align: left; display: inline-block; height: 440px;width:400px; position: relative;">
+    <div id="p5applet-canvas" scroll="no" style="width: 450px; height: 300px; display: block; overflow: hidden; padding: 0; margin: auto; border: 2px solid #863872;" title="Cliquer-glisser pour faire tourner. Pour déplacer la vue, bouger la souris avec le clic centré ou le clic droit enfoncé."></div>
+</div>
+<!-- </div> -->

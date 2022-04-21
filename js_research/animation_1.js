@@ -198,8 +198,8 @@ function init1()
 		S.verticesNeedUpdate = true;
 		S.computeFaceNormals();
 
-		// Will not be necessary at every frame (for when the deformed shape isn't time dependent)
 		plate.visible = glob.showEnvelop;
+		// Won't be needed at every frame (for ex. when the deformed shape isn't time dependent)
 		if( plate.visible )
 		{
 			if( glob.plate_config == 0)
@@ -223,7 +223,7 @@ function init1()
 					g_plate.vertices[i].z = Q.z;
 				}
 			}
-			// Update deformation
+			// Update deformation (costly)
 			g_plate.verticesNeedUpdate = true;
 			g_plate.computeFaceNormals();
 		}

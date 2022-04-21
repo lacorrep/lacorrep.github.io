@@ -1,0 +1,230 @@
+<!-- TITLE: 🔄 Bras de levier -->
+<!-- DESCRIPTION: Entraîne-toi à identifier le bras de levier d'une force par rapport à un point. -->
+<!-- Paul Lacorre 11/09/2020 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+<script>
+    // Paul Lacorre 11/09/2020
+    const R0 = 100; // rayon minimal
+    const Ramp = 90; // amplitude de variation du rayon
+    const sommets = 50; // nombre de sommets (arrondis) pour la patate
+    //const palette = ["e9d2e8", "e0d8ea", "dedced", "e9eef1", "fefdf1"];
+    let phi0, dilatationX, dilatationY; // aspect de la patate
+    let force; // force
+    let O; // point de calcul du moment de la force (fulcrum en anglais)
+    let paused = false; // mettre en pause quand la solution s'affiche
+    // Gamification
+    const win = ["👌", "🎉", "🤩", "👷‍♂️", "👷‍♀️", "👨‍🏫", "👩‍🏫", "🔥", "💮", "🎯", "🏆"];
+    const loose = ["🙇‍♀️", "🙇‍♂️", "😭", "😵", "😨"];
+    const feedback = true; // afficher des emoji en cas de vitctoire / défaite et compter les combos
+    let combo = 0; // nombre de bonnes réponses consécutives
+    const hitbox_radius = 30; // rayon de la hitbox (augmenter pour plus de tolérance)
+
+    function setup() {
+        var myCanvas = createCanvas(700, 500);
+        myCanvas.style('display', 'block');
+        myCanvas.parent("p5applet");
+        //createCanvas(windowWidth, windowHeight);
+        // noiseDetail(5, 0.4); // formes plus douces
+        noiseDetail(3, 0.4); // formes encore plus douces
+        textAlign(CENTER);
+
+        // frameRate(15);
+        noLoop();
+
+        // Aspect de la patate
+        phi0 = random(TWO_PI);
+        dilatationX = random(1, 1.5);
+        dilatationY = random(1, 1.5);
+
+        // Force
+        force = new Force();
+        // Point de calcul du moment
+        O = p5.Vector.random2D().mult(R0);
+    }
+
+    /*
+    function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+    }
+    */
+
+    // DRAW ----------------------------------------------------------
+
+    function draw() {
+
+        background(252);
+        translate(width / 2, height / 2);
+
+        // Patate
+        stroke(100);
+        fill(227);
+
+        /*
+        beginShape();
+        for (let theta = 0; theta < TWO_PI * 0.95; theta += TWO_PI / 50) {
+            let R = R0 + Ramp * noise(0.8 * theta);
+            vertex(dilatationX * R * cos(theta + phi0), dilatationY * R * sin(theta + phi0));
+        }
+        endShape(CLOSE);
+        */
+
+        beginShape();
+        for (let i = -1; i <= sommets + 1; i++) {
+            let dir = p5.Vector.fromAngle(TWO_PI * i / sommets);
+            dir.mult(R0 + Ramp * noise(1.2 * dir.x + 5e3, 1.2 * dir.y + 8e3));
+            curveVertex(dilatationX * dir.x, dilatationY * dir.y);
+        }
+        endShape();
+
+        // Force
+        drawArrow(force.M, force.F, 'red');
+
+        // Solution (projection)
+        if (mouseIsPressed & !paused) { // reveal solution
+
+            // Droite d'action
+            push();
+            translate(force.M);
+            strokeWeight(5);
+            stroke(255, 0, 0, 30);
+            line(-100 * force.F.x, -100 * force.F.y, 100 * force.F.x, 100 * force.F.y);
+            pop();
+
+            // Projection de O sur la droite dirigée par la force
+            let proj = projeterPointSur(O, force);
+
+            // Segment entre O et le point projeté (bras de levier)
+            stroke(0);
+            fill(0);
+            dottedLine(O.x, O.y, proj.x, proj.y, 7);
+
+            // Point projeté
+            fill(128, 200, 255);
+            circle(proj.x, proj.y, 15);
+            //write("H", proj);
+
+            // Zone autour du clic
+            stroke(255, 255, 0);
+            fill(255, 255, 0, 50);
+            circle(mouseX - width / 2, mouseY - height / 2, 2 * hitbox_radius);
+
+            if (feedback) {
+                noStroke();
+                fill(0);
+                textSize(110);
+                // Si le curseur est suffisament près du point projeté
+                if (sq(mouseY - height / 2 - proj.y) + sq(mouseX - width / 2 - proj.x) < sq(hitbox_radius)) {
+                    // WIN
+                    text(random(win), -0.37 * width, -0.25 * height);
+                    combo++;
+                    textSize(45);
+                    text("À la suite : " + combo, 0.25 * width, 0.44 * height);
+                    /*
+                      if (combo == 7) {
+                          var nom_de_famille = prompt("Bravo ! Saisis ton nom de famille pour valider l'activité.");
+                          prompt("Et voilà ! Colle ce code dans l'activité Madoc pour terminer.", btoa(nom_de_famille));
+                      }
+                    */
+                } else {
+                    // LOOSE
+                    text(random(loose), -0.37 * width, -0.25 * height);
+                    combo = 0;
+                }
+            }
+        }
+
+        // Point de calcul du moment
+        stroke(0);
+        fill(255);
+        circle(O.x, O.y, 15);
+        //write("O", O);
+    }
+
+    // end of DRAW ----------------------------------------------------------
+
+    function mousePressed() {
+        if (0 < mouseX && mouseX < width && 0 < mouseY && mouseY < height) { // another way: https://p5js.org/reference/#/p5.Element/mousePressed
+            if (!paused) {
+                redraw();
+                paused = true;
+            } else {
+                nouveauProbleme();
+            }
+        }
+    }
+
+    // Présente un nouveau problème (jeu)
+    function nouveauProbleme() {
+        // Nouvelle patate
+        phi0 = random(TWO_PI);
+        dilatationX = random(1, 1.5);
+        dilatationY = random(1, 1.5);
+        noiseSeed();
+
+        // Nouvelle force
+        force = new Force();
+
+        // Nouveau point de calcul du moment
+        O = p5.Vector.random2D().mult(random() * 1.4 * (R0 + Ramp));
+
+        redraw();
+
+        paused = false;
+    }
+
+
+    function projeterPointSur(A, force) {
+        let MA = A.copy().sub(force.M); // position du point relativement au point d'application
+        let Mcopy = force.M.copy(); // point d'application de la force
+        return Mcopy.add(force.F.copy().mult(force.F.dot(MA) / force.F.magSq()));
+    }
+
+    // Draw an arrow for a vector at a given base position
+    function drawArrow(base, vec, myColor) {
+        push();
+        stroke(myColor);
+        strokeWeight(4);
+        fill(myColor);
+        translate(base.x, base.y);
+        line(0, 0, vec.x, vec.y);
+        rotate(vec.heading());
+        let arrowSize = 10;
+        translate(vec.mag() - arrowSize, 0);
+        triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
+        pop();
+    }
+
+    // Draw a line with dots
+    function dottedLine(x1, y1, x2, y2, spacing) {
+        steps = mag(x2 - x1, y2 - y1) / spacing;
+        push();
+        for (let i = 0; i <= steps; i++) {
+            let x = lerp(x1, x2, i / steps);
+            let y = lerp(y1, y2, i / steps);
+            noStroke();
+            ellipse(x, y, 3, 3);
+        }
+        pop();
+    }
+
+    function write(txt, vec) {
+        push();
+        fill(0);
+        noStroke();
+        textSize(20);
+        text(txt, vec.x + 15, vec.y - 15);
+        pop();
+    }
+
+    class Force {
+        constructor() {
+            this.M = p5.Vector.random2D().mult(random(R0)); // point d'application
+            this.F = p5.Vector.random2D().mult(random(40, 200)); // intensité
+        }
+    }
+</script>
+<p style="font-size: 1.3em;">👉 Trouve la <a href="https://fr.wikipedia.org/wiki/Projection_orthogonale" target="_blank"><span class="" style="color: rgb(0, 30, 255); /*cursor: help;*/" title="* Projection orthogonale">projection</span></a><span class="" style="color: rgb(0, 30, 255);"> </span>du
+    point blanc ○ sur la droite d'action de la force (en <span style="color:red">rouge</span>). Le bras de levier est la longueur du segment en pointillés.<br></p>
+<main style="text-align: center; display: block; width: 100%;">
+    <div id="p5applet" style="width: 700px; height: 500px; display: block; overflow: hidden; padding: 0; margin: auto; border: 2px solid #863872;"></div>
+</main>

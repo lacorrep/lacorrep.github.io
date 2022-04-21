@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!-- Paul Lacorre 30/08/2020 3h -->
+<!-- Paul Lacorre 31/08/2020 1h -->
+<!-- Paul Lacorre 02/09/2020 2h -->
+
+<html lang="fr">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- KaTeX -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+	<!-- The loading of KaTeX is deferred to speed up page rendering -->
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+	<!-- To automatically render math in text elements, include the auto-render extension: -->
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload='renderMathInElement(document.body,{ // options
+	delimiters:[
+		{left: "$", right: "$", display: false}
+	]});'></script>
+
+	<script>
+		// Paul Lacorre 30/08/2020
+		// Gère une application qui propose des calculs de produit vectoriel
+		// Algébriquement ou avec la notation en colonne
+
+		// document.addEventListener("click", afficher_question_reponse);
+
+		var state = "solution"; // état du programme ("question" ou "réponse")
+		var mode = "vecteurs";
+		var difficulty = 2;
+		var bases = [
+				  ["x","y","z"],
+				  ["i","j","k"],
+				  ["u","v","w"],
+				  ["e_x","e_y","e_z"],
+				  ["e_1","e_2","e_3"],
+				  ["e_\\rho","e_\\theta","e_z"],
+				  // ["e_r","e_\\theta","e_\\varphi"],
+				]
+    let compteur_solutions_affichees = 0;
+    const messages_feedback = ["", // 0 jamais affiché
+        "Bon début ! ✅",
+        "C'est bien !",
+        "Tu y es presque !",
+        "Bravo ! On continue ?", // 4
+        "L'entraînement est la clé de la réussite ! 💪",
+        "Très bien !",
+        "Alors là, je dis OUI !",
+        "BRAVO ! Merci d'avoir joué 😊", // 8
+        "On ne s'arrête plus !!",
+        "C'est ça !! 💪",
+        "Extraordinaire 😎",
+        "Trop facile 😌 Je crois qu'on est bon pour l'examen là", // 12
+        "Ah, on continue ?..",
+        "Rien ne t'arrête ! 😲",
+        "x, y, z, x, y, z...",
+        "Moins fois moins fois plus...",
+        "Il serait temps d'envisager une pause là, non ?..",
+        "...",
+        ".........",
+        "Bon, d'accord.",
+        "!!!!!"
+    ];
+
+
+		function afficher_question_reponse()
+		{
+			if (state === "solution")
+			{
+				/* Générer une question */
+
+				// Générer deux vecteurs
+				if( difficulty >= 4 )
+				{
+					// Générer autant de composantes non nulles que le niveau de difficulté
+					// puis les mélanger
+					var uv = [0,0,0, 0,0,0]
+					for(var i = 0; i < difficulty; i++)
+						uv[i] = rand_sign()*rand_int(5);
+					uv = shuffle(uv);
+					var u = uv.slice(0, 3); // slice from 1..3 - add 1 as the end index is not included
+					var v = uv.slice(3, 6);
+				}
+				if( difficulty == 3 )
+				{
+					// Un des vecteurs aura 2 composantes non nulles,
+					// l'autre n'en aura qu'une seule.
+					// On permute aléatoirement les deux.
+					var u = shuffle([rand_sign()*rand_int(5),rand_sign()*rand_int(5),0]);
+					var v = shuffle([rand_sign()*rand_int(5),0,0]);
+					if( rand_bool() )
+					{
+						// swap
+						var temp = v;
+						v = u;
+						u = temp;
+					}
+				}
+				if( difficulty == 2 )
+				{
+					var u = shuffle([rand_sign()*rand_int(5),0,0]);
+					var v = shuffle([rand_sign()*rand_int(5),0,0]);
+
+					// // ensure that the result is never \vec 0
+					// var v = [0,0,0];
+					// while( magSq(cross_product(u,v)) < 0.1 )
+					// 	v = shuffle([rand_sign()*rand_int(5),0,0]);
+				}
+
+				// Calcul du produit vectoriel
+				w = cross_product(u,v);
+
+				// Générer les strings "question" et "reponse"
+
+				if( mode === "vecteurs" )
+				{
+					var base = choose_in_array(bases);
+					u_string_array = array_of_strings_from_components(u,base);
+					v_string_array = array_of_strings_from_components(v,base);
+					w_string_array = array_of_strings_from_components(w,base);
+
+					var s1 = remove_first_plus(shuffle(u_string_array).join(" "));
+					if( u_string_array.length > 1 ) // parenthèses si plus d'un vecteur
+						s1 = "\\big("+s1+"\\big)"
+					var s2 = remove_first_plus(shuffle(v_string_array).join(" "));
+					if( v_string_array.length > 1 ) // parenthèses si plus d'un vecteur
+						s2 = "\\big("+s2+"\\big)"
+
+					if( magSq(w) > 0)
+						var reponse = remove_first_plus( shuffle(w_string_array).join(" ") );
+					else
+						var reponse = "\\vec 0";
+				}
+				else if ( mode === "colonne" ) {
+					var s1 = "\\left|\\begin{matrix}"+u[0]+"\\\\"+u[1]+"\\\\"+u[2]+"\\end{matrix}\\right."
+					var s2 = "\\left|\\begin{matrix}"+v[0]+"\\\\"+v[1]+"\\\\"+v[2]+"\\end{matrix}\\right."
+					var reponse = "\\left|\\begin{matrix}"+w[0]+"\\\\"+w[1]+"\\\\"+w[2]+"\\end{matrix}\\right."
+				}
+				
+				question = s1;
+				question += " \\wedge "
+				question += s2;
+
+
+				// Insertion dans la page
+				document.getElementById("lhs").innerHTML = "$"+question+"$";
+				document.getElementById("rhs").innerHTML = "$"+reponse+"$";
+
+				// Cacher la réponse
+				document.getElementById("rhs").style.filter = "blur(0.4em)";
+
+				// L'application bascule dans l'état "question posée"
+				state = "question";
+
+				// Génération du LaTeX
+				render_math(); // peut échouer si KaTeX n'est pas encore chargé
+
+			}
+			else if ( state === "question" )
+			{
+				/* Afficher la solution */
+				document.getElementById("rhs").style.filter = "";
+
+				// L'application bascule dans l'état "solution affichée"
+				state = "solution";
+
+	            compteur_solutions_affichees++;
+	            let progression_Objectif_suivant = 20;
+	            if (compteur_solutions_affichees < 4) progression_Objectif_suivant = 4;
+	            else if (compteur_solutions_affichees < 8) progression_Objectif_suivant = 8;
+	            else if (compteur_solutions_affichees < 12) progression_Objectif_suivant = 12;
+	            document.getElementById("progress-bar").style.width = Math.round(100 * compteur_solutions_affichees / progression_Objectif_suivant) + "%";
+	            document.getElementById("progress-text").innerHTML = compteur_solutions_affichees + "/" + progression_Objectif_suivant;
+	            document.getElementById("progress-feedback").innerHTML = messages_feedback[Math.min(compteur_solutions_affichees, messages_feedback.length - 1)];
+			}
+		}
+
+		function reset()
+		{
+			state = "solution";
+			afficher_question_reponse();
+		}
+
+
+		// L'utilisateur choisit de n'utiliser que certaines base
+		function reset_bases()
+		{
+			bases = []
+			// document.getElementsByTagName("input");
+			if( document.getElementById("bases-xyz").checked ) bases.push(["x","y","z"]);
+			if( document.getElementById("bases-ijk").checked ) bases.push(["i","j","k"]);
+			if( document.getElementById("bases-uvw").checked ) bases.push(["u","v","w"]);
+			if( document.getElementById("bases-ex" ).checked ) bases.push(["e_x","e_y","e_z"]);
+			if( document.getElementById("bases-ei" ).checked ) bases.push(["e_1","e_2","e_3"]);
+			if( document.getElementById("bases-pol").checked ) bases.push(["e_\\rho","e_\\theta","e_z"]);
+			// if( document.getElementById("bases-sph").checked ) bases.push(["e_r","e_\\theta","e_\\varphi"]);
+
+			if( bases.length == 0 )
+			{
+				bases.push(["x","y","z"]);
+				document.getElementById("bases-xyz").checked = true;
+			}
+		}
+
+
+
+
+
+
+		/* ************************************************* */
+		/* UTILITY FUNCTIONS */
+		/* ************************************************* */
+
+		// Construire un tableau dans lequel chaque élément est une string du style "-4 \vec e_y", "\vec e_r", "- \vec x"
+		function array_of_strings_from_components(vec, base)
+		{
+			tab = [];
+			for(var i = 0; i < 3; i++)
+			{
+				if( vec[i] > 0) // si composante positive
+				{
+					// omettre le "1"
+					tab.push( "+"+((vec[i] == 1)?"":vec[i])+"\\vec "+base[i] );
+				}
+				else if ( vec[i] < 0) // composante négative
+				{
+					// omettre le "1"
+					tab.push( ((vec[i] == -1)?"-":vec[i])+"\\vec "+base[i] );
+				}
+			}
+			return tab;
+		}
+
+		// Retirer le premiercaractère d'une String si ce premier est "+".
+		function remove_first_plus(s)
+		{
+			return (s[0] == "+") ? s.substr(1) : s; // substring de 1 à end
+		}
+
+		// Refaire le rendu des formules
+		function render_math()
+		{
+			renderMathInElement(document.getElementById("equation"),
+				{
+					delimiters:[ {left: "$", right: "$", display: false} ]
+				})
+		}
+
+		// Renvoyer un booléen aléatoirement
+		function rand_bool()
+		{
+			return (Math.random() < 0.5);
+		}
+
+		// Renvoyer un entier entre 1 à N
+		function rand_int(N)
+		{
+			return Math.ceil(N*Math.random());
+		}
+
+		// Renvoyer un signe (+1 ou -1)
+		function rand_sign()
+		{
+			return (Math.random() < 0.5) ? 1 : -1;
+		}
+
+		// Mélanger un tableau
+		function shuffle(array) {
+			// https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array#6274398
+			let counter = array.length;
+
+			// While there are elements in the array
+			while (counter > 0) {
+				// Pick a random index
+				let index = Math.floor(Math.random() * counter);
+
+				// Decrease counter by 1
+				counter--;
+
+				// And swap the last element with it
+				let temp = array[counter];
+				array[counter] = array[index];
+				array[index] = temp;
+			}
+
+			return array;
+		}
+
+		// // Choisir entre les arguments
+		// function choose()
+		// {
+		// 	return arguments[Math.floor(arguments.length*Math.random())]
+		// }
+
+		// Choisir dans les éléments d'un tableau
+		function choose_in_array(tab)
+		{
+			return tab[Math.floor(tab.length*Math.random())]
+		}
+
+		// Produit vectoriel de u et v
+		function cross_product(u,v)
+		{
+			w = Array(3);
+			w[0] = u[1] * v[2] - u[2] * v[1]; 
+			w[1] = u[2] * v[0] - u[0] * v[2]; 
+			w[2] = u[0] * v[1] - u[1] * v[0]; 
+			return w;
+		}
+
+		// Carré de la norme (magnitude squared)
+		function magSq(vec)
+		{
+			return vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2];
+		}
+	</script>
+
+	<style>
+		html
+		{
+			height: 100%;
+			user-select: none;
+		}
+		body
+		{
+			position: relative;
+			margin: 0;
+			padding: 3pt;
+			overflow: hidden;
+			height: 100%;
+			vertical-align: middle;
+			/*background-color: rgb(193, 205, 208); /*rgb(190,190,190);*/*/
+
+			font-family: Roboto, Segoe UI, sans-serif;
+			font-size: 1.2em;
+		}
+		button
+		{
+			border: 0px;
+			border-radius: 5pt;
+			padding:7pt;
+			margin : 0.2em;
+
+			background-color: #ddd;
+
+			font-size: 12pt;
+
+			cursor: pointer;
+		}
+		.square-buttons
+		{
+			width:25pt;
+			height:25pt;
+		}
+		label
+		{
+			margin-right: 7pt;
+			cursor: pointer;
+		}
+		input[type='checkbox']
+		{
+			/* Checkboxes may not be modified. */
+		}
+		/*https://www.w3.org/Style/Examples/007/center.en.html*/
+		/*.centered
+		{
+			position: absolute;
+			width : 80%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}*/
+		main
+		{
+			/*font-size: 6vmin;*/
+			font-size: 1.6em;
+			margin: 0;
+			/*border: 3px solid green;*/
+			cursor: pointer;
+			text-align: center;
+			margin: 1em;
+			height: 2em;
+		}
+		#graphiques
+		{
+			margin-top: 25vmin;
+		}
+	</style>
+	<title>↗ Produit vectoriel</title>
+</head>
+<body>
+
+	<div style="margin:3pt;">👉 Cliquer sur l'équation pour afficher la réponse et cliquer à nouveau pour afficher une nouvelle question.</div>
+	<div id="options">
+		<span>Combien de composantes non nulles ?</span>
+		<button class="square-buttons" onclick="difficulty=2; reset();">2</button>
+		<button class="square-buttons" onclick="difficulty=3; reset();">3</button>
+		<button class="square-buttons" onclick="difficulty=4; reset();">4</button>
+		<button class="square-buttons" onclick="difficulty=5; reset();">5</button>
+		<button class="square-buttons" onclick="difficulty=6; reset();">6</button>
+	</div>
+	<div>
+		<button onclick="mode = 'vecteurs'; reset();">Notation en vecteurs de base</button>
+		<button onclick="mode = 'colonne'; reset();">Notation en colonne</button>
+	</div>
+	<div onclick="reset_bases()">
+		<label><input type="checkbox" id="bases-xyz" checked>$(\vec x,\vec y,\vec z)$</label>
+		<label><input type="checkbox" id="bases-ijk">$(\vec \imath,\vec \jmath,\vec k)$</label>
+		<label><input type="checkbox" id="bases-uvw">$(\vec u,\vec v,\vec w)$</label>
+		<label><input type="checkbox" id="bases-ex" checked>$(\vec e_x,\vec e_y,\vec e_z)$</label>
+		<label><input type="checkbox" id="bases-ei" checked>$(\vec e_1,\vec e_2,\vec e_3)$</label>
+		<label><input type="checkbox" id="bases-pol">$(\vec e_\rho,\vec e_\theta,\vec e_z)$</label>
+		<!-- <label><input type="checkbox" id="bases-sph">$(r,\theta,\varphi)$</label> -->
+	</div>
+	<main id="equation" onclick="afficher_question_reponse()">
+		<span id="lhs">⬆</span> <!-- Left hand side -->
+		<span>$=$</span>
+		<span id="rhs">⬆</span> <!-- Right hand side -->
+	</main>
+    <!-- Barre de progression -->
+    <!-- <label for="progression_exercice">Progression :</label><progress id="progression_exercice" value="3" max="5"></progress> -->
+    <div style="margin-right:10%; text-align:right;">
+        <div style="width:300px; background-color: #f1f1f1; border-radius: 999pt; display:inline-block;">
+            <div id="progress-bar" style="background-color:#2196F3;height:17px;border-radius: 999pt; transition: width 1s; width:0%"></div>
+        </div>
+        <span id="progress-text" style="font-size: 1.3em;">0/4</span>
+        <p id="progress-feedback"></p>
+    </div>
+    <!-- Liens vers YouTube https://moodle.org/mod/forum/discuss.php?d=165825#p965230  -->
+    <h4 style="margin-bottom: 0;">Aide</h4>
+    <div style="font-size: 10pt;"><a class="nomediaplugin" href="https://youtu.be/5W-zXhNfQPU">❔ Je ne sais pas calculer avec les vecteurs de base !</a></div>
+    <div style="font-size: 10pt;"><a class="nomediaplugin" href="https://youtu.be/-AT8Zl-dkdI">❔ Je ne sais pas calculer en colonne !</a></div>
+	<script>
+		reset();
+	</script>
+</body>
+</html>
