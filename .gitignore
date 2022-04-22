@@ -1,4 +1,4 @@
-### Text ###
-#sitemap.txt
-### To be ignored folder ###
+### Files to be ignored ###
+#text.txt
+### Folders to be ignored ###
 gitignore/

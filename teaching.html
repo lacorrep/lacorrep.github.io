@@ -131,8 +131,9 @@
 <!-- Main content -->
 <main>
 	<div class="big-white-title">
-		<h1>Enseignement </h1>
+		<h1>Enseignement</h1>
 	</div>
+
 	<div>
 		<h2>Création de ressources pédagogiques</h2>
 		<h3></h3>
@@ -141,33 +142,12 @@
 		<p>J'utilise des technologies web modernes pour créer des applications interactives et favoriser l'engagement des étudiants avec les concepts clés de la mécanique.</p>
 		<p>L'informatique permet de donner aux apprenants un <i>feedback</i> immédiat et les aide à construire leur sens physique.</p>
 	</div>
+
+
 	<div>
-		<h2>Licence 2 physique - Statique des solides</h2>
+		<h2>Licence 2 - Mécanique - Résistance des matériaux</h2>
 
-		<h3>Bras de levier</h3>
-		<p>Entraînement simple pour apprendre à identifier rapidement le bras de levier d'une force par rapport à un point.</p>
-		<div style="text-align: center;">
-			<iframe style="border: 2px solid gray; padding:0.5em;" src="teaching/applet_bras_de_levier.html" width="90%" height="600px" frameborder="1"></iframe>
-		</div>
-		
-		<h3>Produit vectoriel</h3>
-		<div style="text-align: center;">
-			<iframe style="border: 2px solid gray; padding:0.5em;" src="teaching/applet_produit_vectoriel.html" width="90%" height="470px" frameborder="1"></iframe>
-		</div>
-
-
-		<h3>Pratique du PFS en 2D</h3>
-		<p>Cette application interactive génère aléatoirement des exercices à travailler en autonomie. Un solide quelconque (une "patate") est présenté avec des efforts connus et inconnus. L'étudiant pose le PFS et déduit les composantes manquantes. Une correction rédigée peut être révélée en fin d'exercice.</p>
-		<p>La conception de ce programme a posé plusieurs défis : il faut s'assurer que le problème comporte au plus 3 inconnues et il est préférable que toutes les quantités soient des nombres entiers pour être plus simples à manipuler. J'ai utilisé la méthode de Culmann pour générer un système d'efforts à composantes entières qui soit auto-équilibré, puis j'ai masqué quelques composantes de façon réfléchie pour garantir que la résolution analytique soit possible.</p>
-		<p>Aperçu du résultat :</p>
-		<div style="text-align: center;">
-			<img style="border: 1px solid gray; cursor: not-allowed; padding:1em;" src="teaching/preview_applet_pratique_pfs_2d.png" alt="Pratique du PFS en 2D." title="(application non disponible publiquement)">
-		</div>
-	</div>
-	<div>
-		<h2>Licence 2 physique - Résistance des matériaux</h2>
-
-		<h3>Application interactive : efforts intérieurs dans une poutre</h3>
+		<h3>Visualisation des efforts intérieurs dans une poutre (3D)</h3>
 		<p>Les composantes de $$\vec R$$ (flèches) et $$\vec M$$ (anneaux) sont représentées dans l'animation ci-dessous.</p>
 		<p>Cliquer-glisser pour faire tourner la poutre et zoomer avec la roulette de la souris. Double-cliquer pour revenir à la configuration initiale.</p>
 		<div style="text-align: center;">
@@ -175,7 +155,7 @@
 			</a>
 		</div>
 
-		<h3>Application interactive : efforts intérieurs et déformées de poutres en flexion</h3>
+		<h3>Efforts intérieurs et déformées de poutres en flexion</h3>
 		<p>Faire glisser des liaisons et efforts sur la poutre. Le système doit être isostatique pour visualiser la déformée et les efforts intérieurs.</p>
 		<p><a href="https://selakant.github.io/appli-poutre/" target="_blank">Cliquer ici pour accéder à l'activité.</a></p>
 		<div style="text-align: center;">
@@ -199,6 +179,32 @@
 			<!-- style="resize: both; overflow-x: auto; overflow-y: auto; max-width:100%; z-index: 2;" -->
 		</div>
 	</div>
+
+	<div>
+		<h2>Licence 2 - Mécanique - Statique des solides</h2>
+
+		<h3>Pratique du PFS en 2D</h3>
+		<p>Cette application interactive génère aléatoirement des exercices à travailler en autonomie. Un solide quelconque (une "patate") est présenté avec des efforts connus et inconnus. L'étudiant pose le PFS et déduit les composantes manquantes. Une correction rédigée peut être révélée en fin d'exercice.</p>
+		<p>La conception de ce programme a posé plusieurs défis : il faut s'assurer que le problème comporte au plus 3 inconnues et il est préférable que toutes les quantités soient des nombres entiers pour être plus simples à manipuler. J'ai utilisé la méthode de Culmann pour générer un système d'efforts à composantes entières qui soit auto-équilibré, puis j'ai masqué quelques composantes de façon réfléchie pour garantir que la résolution analytique soit possible.</p>
+		<p>Aperçu du résultat :</p>
+		<div style="text-align: center;">
+			<img style="border: 1px solid gray; cursor: not-allowed; padding:1em;" src="teaching/preview_applet_pratique_pfs_2d.png" alt="Pratique du PFS en 2D." title="(application non disponible publiquement)">
+		</div>
+
+		<h3>Pratique du produit vectoriel</h3>
+		<div style="text-align: center;">
+			<iframe style="border: 2px solid gray; padding:0.5em;" src="teaching/applet_produit_vectoriel.html" width="90%" height="470px" frameborder="1"></iframe>
+		</div>
+
+		<h3>Notion de bras de levier</h3>
+		<p>Entraînement simple pour apprendre à identifier rapidement le bras de levier d'une force par rapport à un point.</p>
+		<div style="text-align: center;">
+			<iframe style="border: 2px solid gray; padding:0.5em;" src="teaching/applet_bras_de_levier.html" width="90%" height="600px" frameborder="1"></iframe>
+		</div>
+
+	</div>
+
+
 </main>
 
 <footer>
