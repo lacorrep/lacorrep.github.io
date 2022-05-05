@@ -202,6 +202,17 @@
 			}
 		}
 
+	    function disable_basis_choice(disable) {
+	        document.getElementById("bases-xyz").disabled = disable;
+	        document.getElementById("bases-ijk").disabled = disable;
+	        document.getElementById("bases-uvw").disabled = disable;
+	        document.getElementById("bases-ex").disabled = disable;
+	        document.getElementById("bases-ei").disabled = disable;
+	        document.getElementById("bases-pol").disabled = disable;
+
+	        document.getElementById("basis-choice").style.color = disable ? "gray" : "black";
+	        //document.getElementById("basis-choice").style.cursor = disable ? "not-allowed" : ""; // n'affecte pas les label
+	    }
 
 
 
@@ -401,8 +412,8 @@
 		<button class="square-buttons" onclick="difficulty=6; reset();">6</button>
 	</div>
 	<div>
-		<button onclick="mode = 'vecteurs'; reset();">Notation en vecteurs de base</button>
-		<button onclick="mode = 'colonne'; reset();">Notation en colonne</button>
+		<button onclick="mode = 'vecteurs'; disable_basis_choice(false); reset();">Notation en vecteurs de base</button>
+		<button onclick="mode = 'colonne'; disable_basis_choice(true); reset();">Notation en colonne</button>
 	</div>
 	<div onclick="reset_bases()">
 		<label><input type="checkbox" id="bases-xyz" checked>$(\vec x,\vec y,\vec z)$</label>
