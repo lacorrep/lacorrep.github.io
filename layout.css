@@ -259,7 +259,8 @@ footer
 		padding: 1.5em;
 		margin-bottom: 20pt;
 
-		overflow-y: scroll;
+		/*overflow-y: scroll;*/
+		overflow-y: hidden;
 		overflow-x: hidden;
 	}
 
