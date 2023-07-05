@@ -106,7 +106,7 @@ function init2()
 
 		// Plate side view
 
-		ctx.fillStyle = 'rgb(97,223,250)'; //rgb(94,210,236)
+		ctx.fillStyle = 'rgb(162, 236, 252)'; //'rgb(97,223,250)' //rgb(94,210,236)
 		ctx.beginPath();
 		ctx.moveTo(plate.x[0], plate.y[0]);
 		for(let i = 1, l = plate.x.length; i <= l; i++)
