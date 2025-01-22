@@ -11,66 +11,66 @@
 }
 
 
-html
-{
+body {
 	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#527dc8+1,81ddff+100 */
-	background: #527dc8; /* Old browsers */
-	background: var(--blue-one); /* in case var(--blue-one) is changed and the browser is old*/
-	background: -moz-linear-gradient(45deg, var(--blue-one) 1%, var(--blue-two) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(45deg, var(--blue-one) 1%,var(--blue-two) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(45deg, var(--blue-one) 1%,var(--blue-two) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	background: linear-gradient(45deg, var(--blue-one) 1%,var(--blue-two) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#527dc8', endColorstr='#81ddff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: #527dc8;
+	/* Old browsers */
+	background: var(--blue-one);
+	/* in case var(--blue-one) is changed and the browser is old*/
+	background: -moz-linear-gradient(45deg, var(--blue-one) 1%, var(--blue-two) 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(45deg, var(--blue-one) 1%, var(--blue-two) 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(45deg, var(--blue-one) 1%, var(--blue-two) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: linear-gradient(45deg, var(--blue-one) 1%, var(--blue-two) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#527dc8', endColorstr='#81ddff', GradientType=1);
+	/* IE6-9 fallback on horizontal gradient */
 	background-repeat: no-repeat;
 
 }
 
-a
-{
+a {
 	color: inherit;
 	text-decoration: none;
 	cursor: pointer;
-	
+
 	transition: color 0.15s ease-in-out;
 	-moz-transition: color 0.15s ease-in-out;
 	-o-transition: color 0.15s ease-in-out;
 	-webkit-transition: color 0.15s ease-in-out;
 }
 
-a:hover
-{
+a:hover {
 	color: #51E0FF;
 }
 
-header a
-{
+header a {
 	color: white;
 }
 
-header
-{
-	background-color: rgba(0,0,0,0.6);
+header {
+	background-color: rgba(0, 0, 0, 0.6);
 	color: white;
 }
 
-h1
-{
+h1 {
 	color: #000;
 }
 
-h2
-{
+h2 {
 	color: #347ebf;
 }
 
-main, footer
-{
+main,
+footer {
 	/*color: black;*/
 	color: #333;
 }
 
-main>div, footer
-{
+main>div,
+footer {
 	background-color: white;
 }
 
@@ -82,7 +82,23 @@ main>div, footer
 	-webkit-transition: color 0.10s ease-in-out;
 }*/
 
-main p a
-{
+main p a {
 	text-decoration: underline;
+}
+
+.has-title {
+	cursor: help;
+	border-bottom: 1px dotted;
+}
+
+.big-white-title {
+	text-align: center;
+	padding: 0;
+	background: none;
+	font-size: calc(1.5em + 1.3vw);
+}
+
+.big-white-title h1 {
+	margin: 0;
+	color: white;
 }

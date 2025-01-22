@@ -18,6 +18,12 @@
 		{left: "$", right: "$", display: false}
 	]});'></script>
 
+	<style>
+		html {
+			font-family: 'Roboto', 'Arial', 'Segoe UI', sans-serif;
+		}
+	</style>
+	
 	<script>
 		// Paul Lacorre 30/08/2020
 		// Gère une application qui propose des calculs de produit vectoriel
@@ -37,30 +43,30 @@
 				  ["e_\\rho","e_\\theta","e_z"],
 				  // ["e_r","e_\\theta","e_\\varphi"],
 				]
-    let compteur_solutions_affichees = 0;
-    const messages_feedback = ["", // 0 jamais affiché
-        "Bon début ! ✅",
-        "C'est bien !",
-        "Tu y es presque !",
-        "Bravo ! On continue ?", // 4
-        "L'entraînement est la clé de la réussite ! 💪",
-        "Très bien !",
-        "Alors là, je dis OUI !",
-        "BRAVO ! Merci d'avoir joué 😊", // 8
-        "On ne s'arrête plus !!",
-        "C'est ça !! 💪",
-        "Extraordinaire 😎",
-        "Trop facile 😌 Je crois qu'on est bon pour l'examen là", // 12
-        "Ah, on continue ?..",
-        "Rien ne t'arrête ! 😲",
-        "x, y, z, x, y, z...",
-        "Moins fois moins fois plus...",
-        "Il serait temps d'envisager une pause là, non ?..",
-        "...",
-        ".........",
-        "Bon, d'accord.",
-        "!!!!!"
-    ];
+		let compteur_solutions_affichees = 0;
+		const messages_feedback = ["", // 0 jamais affiché
+			"Bon début ! ✅",
+			"C'est bien !",
+			"Tu y es presque !",
+			"Bravo ! On continue ?", // 4
+			"L'entraînement est la clé de la réussite ! 💪",
+			"Très bien !",
+			"Alors là, je dis OUI !",
+			"BRAVO ! Merci d'avoir joué 😊", // 8
+			"On ne s'arrête plus !!",
+			"C'est ça !! 💪",
+			"Extraordinaire 😎",
+			"Trop facile 😌 Je crois qu'on est bon pour l'examen là", // 12
+			"Ah, on continue ?..",
+			"Rien ne t'arrête ! 😲",
+			"x, y, z, x, y, z...",
+			"Moins fois moins fois plus...",
+			"Il serait temps d'envisager une pause là, non ?..",
+			"...",
+			".........",
+			"Bon, d'accord.",
+			"!!!!!"
+		];
 
 
 		function afficher_question_reponse()

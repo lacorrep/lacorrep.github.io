@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=latin-ext" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/layout.css"/>
+<link rel="stylesheet" href="/theme1.css"/>
+
+<link rel="icon" href="/img/favicon-32.png" sizes="32x32">
+<link rel="icon" href="/img/favicon-192.png" sizes="192x192">
+
+<title>Research | Paul Lacorre</title>
+<meta name="description" content="I talk about my research on inflatable plates and share things that I enjoy learning.">
+<meta name="keywords" content="Paul Lacorre,inflatable,inflatable plate,inflatable panel,pressurized,mechanics,PhD,plaque gonflable,Nantes,IUT,Aix-Marseille,pulvinus">
+<meta name="theme-color" content="#81ddff">
+
+</head>
+<body>
+  <header>
+    
+
+
+<a id="paul-lacorre" href="/">Paul Lacorre</a>
+<img id="preview" src="/img/preview.jpg" style="display:none;" alt="">
+
+
+<nav>
+    <ul>
+        <a href="/research">
+            <li>Research</li>
+        </a>
+        <a href="/teaching">
+            <li>Enseignement</li>
+        </a>
+        
+        
+        
+        <a href="#contact" onclick="showContactForm()">
+            <li>Contact</li>
+        </a>
+    </ul>
+</nav>
+  </header>
+  <main>
+    
+  
+
+  
+<!-- Let's talk about my research! I enjoy the mathematical part of it because it's very geometrical. Look at all these nice drawings! -->
+
+<style>
+	main>div {
+		text-align: left;
+	}
+
+	canvas {
+		float: right;
+		margin-left: 1em;
+		/*background: rgba(0,0,0,0.02);*/
+		user-select: none;
+	}
+
+	#cv1 {
+		cursor: -webkit-grab;
+		cursor: grab;
+	}
+
+	#cv1:active {
+		cursor: -webkit-grabbing;
+		cursor: grabbing;
+	}
+
+	#cv2 {
+		cursor: pointer;
+	}
+
+	figure {
+		float: right;
+		text-align: right;
+		margin-bottom: 0.9em;
+	}
+
+	figcaption {
+		color: #676767;
+		font-size: 0.8em;
+		font-style: italic;
+	}
+
+	/* Canvas centering */
+
+	@media only screen and (max-width: 1000px) and (min-width: 500px) {
+		canvas {
+			float: none;
+			display: block;
+			margin: auto;
+		}
+	}
+
+	/* KaTeX */
+
+	.katex-html {
+		pointer-events: none;
+	}
+
+	/* Affichage smartphone */
+
+	@media only screen and (max-width: 1000px) {
+		.katex-display {
+			font-size: calc(0.7em + 1vmin);
+		}
+	}
+</style>
+<!-- <title>Research | Paul Lacorre</title> -->
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+	integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<!-- The loading of KaTeX is deferred to speed up page rendering -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+	integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+	crossorigin="anonymous"></script>
+<!-- To automatically render math in text elements, include the auto-render extension: -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+	integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload='renderMathInElement(document.body,{ // options
+	// output: "mathml",
+	delimiters:[
+		{left: "$$", right: "$$", display: false},
+		{left: "\\[", right: "\\]", display: true}
+	]});'></script>
+
+<!-- LaTeX macros -->
+<div style="display: none;">
+	\[
+	\gdef{\vec}{\mathbf}
+	\gdef{\tens}{\mathbf}
+	\gdef\derp#1#2{\dfrac{\partial #1}{\partial #2}}
+	\]
+</div>
+
+
+<!-- Main content -->
+
+<div class="big-white-title">
+	<h1>Modeling inflatable panels</h1>
+</div>
+<div>
+	<h2>Inflatable structures</h2>
+	<figure>
+		<img src="https://upload.wikimedia.org/wikipedia/commons/8/85/BEAM_module_expansion_series.jpg"
+			alt="Image description: photos of the BEAM module deployment (image credit: NASA)"
+			style="width:100%; max-width:500px; height:auto;">
+		<figcaption>BEAM inflatable module expansion (NASA)</figcaption>
+	</figure>
+	<h3>Advantages</h3>
+	<p>
+	<ul>
+		<li>very material-saving</li>
+		<li>lightweight</li>
+		<li>movable</li>
+		<li>reusable</li>
+		<li>easy to repair (patching)</li>
+		<li>adjustable stiffness</li>
+	</ul>
+	</p>
+
+	<h3>Target industries</h3>
+	<p>So far, inflatable plates are mainly used in sports equipment such as stand up paddles (SUP) and air tracks
+		(tumbling mats). But NASA and other space agencies are interested in inflatable habitats (<a
+			href="https://www.nasa.gov/exploration/analogs/inflatable_habitat_blog.html"
+			title="NASA - Inflatable Habitat Blog">[1]</a>, <a
+			href="https://www.space.com/37068-beam-inflatable-habitat-first-year-space.html"
+			title="BEAM Inflatable Space Habitat Has Successful 1st Year in Orbit">[2]</a>) and pressurized panels may
+		become a key component of space exploration.</p>
+	<p>Other potential applications involve inflatable movie screens, inflatable plane wings, air mattresses and air
+		tunnels.</p>
+
+	<h3>Perspectives</h3>
+	<p>Our hope is that our model will help engineers design <b>load bearing inflatable buildings</b> on Earth or in
+		space.</p>
+</div>
+<div>
+	<h2>Plate theory</h2>
+	<canvas id="cv1" width=550 height=450>(CANVAS ERROR)</canvas>
+	<h3>Why a plate model?</h3>
+	<p> Our goal is to obtain 2D equations that describe our 3D system. Since the geometry of the panel is closer to a
+		2D body than it is from a 3D one, it seems reasonable to focus our efforts on the two in-plane dimensions.</p>
+	<h3>Kinematics</h3>
+	<p>A plate is modeled as a plane onto which a "field" of fibers is attached. Every point $$\vec P$$ of the
+		mid-surface is pierced by a straight line called the <em>normal fiber</em> (it is only normal in the initial
+		configuration). The fiber is guided by the vector $$\vec a_3$$.</p>
+	<p>We work with the <b>Mindlin–Reissner</b> kinematics assumption:
+		\[ \vec a_3 = \tens R \cdot \vec e_3 \]
+		with $$\tens R = \tens R (\vec P_0,t)$$ a rotation tensor field. This means that the fibers behave like rigid
+		bodies: they may rotate but not stretch.
+	</p>
+	<p>This yields the following displacement field:
+		\[\vec U ( \vec Q_0,t ) = \vec U (\vec P_0, t) + Z (\tens R - \tens I) \vec e_3\]</p>
+	<p>$$\vec P_0$$ is the initial position of a point in the <b>mid-surface</b> while $$\vec Q_0$$ is the initial
+		position of a point anywhere inside the plate. $$Z$$ is the the algebraic distance $$\overline{\vec{P_0Q_0}}$$.
+	</p>
+</div>
+<div>
+	<h2>Follower forces</h2>
+	<canvas id="cv2" width=400 height=290>(CANVAS ERROR)</canvas>
+	<p>Inflatable structures acquire their rigidity from internal pressure. The surface stress vector $$\vec t$$ is:</p>
+	\[ \vec t = p \vec n \]
+	<p>where $$\vec n$$ is the outward normal vector to the plate's upper or lower faces in the current configuration
+		(drawn in orange).</p>
+	<p>The animation is a side-view of the plate as the fibers' orientation (in dark blue) changes over time. The normal
+		to the mid-surface is drawn in black.</p>
+	<p>The virtual power of the internal pressure forces is:</p>
+	\[ \mathscr{P}^*_{\text{pressure}} = \int_{S_p} p \vec n \cdot \vec U^*(\vec Q_0) \mathrm d S \]
+	<p>$$\vec n$$ must be calculated in the deformed configuration and written mathematically as a function of
+		quantities defined on the mid-surface. They must also be independent of $$Z$$.</p>
+</div>
+<div>
+	<h2>Constitutive law</h2>
+	<h3>Saint Venant-Kirchhoff material</h3>
+	<p>Since we are building a nonlinear theory, we need a constitutive law that is compatible with large deformations.
+		\[ \tens \Sigma = \tens \Sigma_0 + \mathbb{D} : \tens E \]
+		If the material is assumed to be <b>isotropic</b>:
+		\[ \tens \Sigma = \tens \Sigma_0 + 2 \mu \tens E + \lambda (\operatorname{tr} \tens E) \tens I \]</p>
+
+</div>
+<div>
+	<h2>Linearization</h2>
+	<p>The equations are linearized around the <b>reference configuration</b> (inflated). The displacement field $$\vec
+		U$$ and its derivatives (with respect to space or time) are assumed to be <b>infinitesimal of the first
+			order</b>.</p>
+</div>
+<div>
+	<h2>Free vibration analysis</h2>
+	<figure>
+		<img src="/img/vib_mode_shapes_free3_FINAL_cropped.jpg"
+			alt="Image description: vertical deflection of several eigenmodes shown using a colorscale."
+			style="width:100%; max-width:450px; height:auto;">
+		<figcaption>First modes of vibration of a free circular panel</figcaption>
+	</figure>
+
+	<p>The vibrations of thick plates are described by the oscillations of the three quantities that describe the
+		current configuration: $$W$$, $$\psi_1$$, $$\psi_2$$.
+		As a result, to each natural frequency $$f_{mn}$$ correspond 3 wave numbers $$k_1$$, $$k_2$$, $$k_3$$.
+		There exists a coupling between flexural modes, thickness-shear modes and thickness-twist modes.
+		Another interesting phenomenon is the existence of a cut-off frequency that separates the low-frequency modes
+		from the high-frequency modes, giving rise to distinct mode shapes.</p>
+</div>
+<div>
+	<h2>Experiments</h2>
+	<p>The theory was tested by confronting it to experimental results. The deflections were measured for a
+		simply-supported circular inflatable panel with uniform vertical load.</p>
+	<br>
+	<div style="text-align: center;">
+		<div style="width: 70%; margin: auto;">
+			<img src="/img/research_experiments_statics.png" width="100%" title="">
+			<p><b>Experimental deflection profiles (--) compared to the analytical solution (—) for several uniform
+					vertical loads.</b></p>
+		</div>
+	</div>
+</div>
+<div>
+	<h2>Finite element</h2>
+	<p>The nonlinear expression of the PVP can be discretized to create nonlinear finite elements dedicated to modeling
+		inflatable panels using flat elements.</p>
+</div>
+
+<script src="/onready.js"></script>
+<script src="/lib/three.min.js"></script>
+<script src="/lib/canvas_arrow.js"></script>
+<script src="/js_research/animation_1.js"></script>
+<script src="/js_research/animation_2.js"></script>
+  
+
+  </main>
+  <footer>
+    <div>
+    <a class="imglink" href="https://ism.univ-amu.fr/en"><img src="/img/logo_ISM.svg"
+            alt="Logo Institut des Sciences du Mouvement Étienne Jules Marey" height="32px"
+            title="Paul LACORRE - Institut des Sciences du Mouvement Étienne Jules Marey"></a>
+
+    <span class="spacer1"></span>
+
+    <a class="imglink" href="https://www.univ-amu.fr/en"><img src="/img/logo_amu.svg"
+            alt="Logo Aix-Marseille Université" height="32px" title="Paul LACORRE - Aix-Marseille Université"></a>
+
+    <span class="spacer1"></span>
+
+    <a class="imglink" href="https://orcid.org/0000-0002-1296-7433"><img src="/img/logo_orcid.svg" alt="Logo ORCID"
+            height="32px" title="Paul LACORRE (0000-0002-1296-7433) - ORCID"></a>
+
+    <span class="spacer1"></span>
+
+    <a class="imglink" href="https://www.linkedin.com/in/paul-lacorre-4988b5107/"><img src="/img/linkedin-favicon.png"
+            alt="Logo LinkedIn" title="Paul Lacorre | LinkedIn"></a>
+
+    <span class="spacer1"></span>
+
+    <a class="imglink" href="https://github.com/lacorrep"><img src="/img/github-favicon.png" alt="Logo GitHub"
+            title="lacorrep • GitHub"></a>
+
+    <span id="contact"></span>
+</div>
+  </footer>
+  <script src="/onready.js"></script>
+</body>
+</html>

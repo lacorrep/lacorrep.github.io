@@ -1,42 +1,36 @@
 /* STRUCTURE */
 
-*
-{
+* {
 	/* debug */
 	/*border: 1px solid black;*/
 }
 
-*
-{
+* {
 	/* Let me decide when I want margin or padding. I'm a grown up. */
 	margin: 0;
 	padding: 0;
 }
 
-html
-{
+html {
 	scroll-behavior: smooth;
-	
+
 	min-height: 100%;
 	font-family: 'Roboto', 'Arial', 'Segoe UI', sans-serif;
 }
 
-body
-{
+body {
 	min-height: 100%;
 
 	/*display: grid;*/
 	/*grid-template-rows: auto; */
 }
 
-p
-{
+p {
 	line-height: 1.5em;
 }
 
 
-header
-{
+header {
 	display: grid;
 	grid-template-columns: 30% auto;
 
@@ -49,16 +43,14 @@ header
 	user-select: none;
 }
 
-nav
-{
+nav {
 	margin: 0;
 	padding: 0;
 
 	text-align: right;
 }
 
-nav ul
-{
+nav ul {
 	/*list-style-type: none;*/
 	font-size: 0.6em;
 
@@ -66,8 +58,7 @@ nav ul
 	justify-content: flex-start;
 }
 
-nav ul li
-{
+nav ul li {
 	display: inline-block;
 
 	text-transform: uppercase;
@@ -78,49 +69,42 @@ nav ul li
 	/*background: rgba(255,255,255,0.2);*/
 }
 
-nav ul li:hover
-{
+nav ul li:hover {
 
 	cursor: pointer;
 }
 
 /* BELOW HEADER */
 
-main
-{
+main {
 	padding: 70pt;
 	padding-bottom: 0;
 }
 
-footer
-{
+footer {
 	padding: 40pt;
 }
 
-footer a
-{
+footer a {
 	vertical-align: top;
 }
 
-main>div
-{
+main>div {
 	padding: 2em;
 	margin-bottom: 70pt;
 	overflow: auto;
 }
 
-h1, h2
-{
+h1,
+h2 {
 	font-weight: 500;
 }
 
-h3
-{
+h3 {
 	margin-top: 0.6em;
 }
 
-main div h2
-{
+main div h2 {
 	font-family: 'Roboto', sans-serif;
 	font-weight: 600;
 	font-size: 1.8em;
@@ -130,45 +114,68 @@ main div h2
 	margin: 0 0 6pt 0;
 }
 
-main>div h1
-{
+main>div h1 {
 	margin-bottom: 0.3em;
 	width: 100%;
 }
 
-main ul
-{
+main ul {
 	padding-left: 2em;
 }
 
-footer
-{
+footer {
 	text-align: center;
 }
 
-.grid-container
-{
-	margin: auto;
+.grid-container {
+	display: grid;
 
-	width: 90%;
-	text-align: center;
+	grid-gap: 2em;
+
+	/* [2] Make columns adjust according to the available viewport */
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	/* [3] Set the height for implicitly-created row track */
+	/* grid-auto-rows: 250px; */
 }
 
-.grid-item
-{
+.grid-item {
+	display: grid;
 	font-weight: 600;
 
-	display: inline-block;
+	text-align: center;
+
+	/* display: inline-block; */
 	box-sizing: border-box;
 	padding: 1em;
 
 	height: 200px;
-	width:  200px;
+	width: 200px;
 	margin: 0.5em;
 
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(0, 23, 28, 0.1);
 }
 
+.grid-item h3 {
+	margin: auto;
+}
+
+
+.list-category {
+	/* background-color: rgb(196, 251, 255); */
+	text-align: center;
+	height: 200px;
+	display: grid;
+	vertical-align: middle;
+}
+
+.list-category h2 {
+	font-size: 2.1em;
+	text-transform: uppercase;
+	/* font-style: italic; */
+	margin: auto;
+}
+
+/* 
 #contact-form
 {
 	display: block;
@@ -180,80 +187,89 @@ footer
 	-webkit-transition: height 0.5s ease-out;
 
 	overflow: hidden;
-}
+} */
 
-.dropdown
+/* .dropdown
 {
 	height: 800px !important;
+} */
+
+/* ******************************************************* */
+/*                        KaTeX                       */
+/* ******************************************************* */
+
+
+.katex-html {
+	pointer-events: none;
 }
 
+/* Affichage smartphone */
 
+@media only screen and (max-width: 1000px) {
+	.katex-display {
+		font-size: calc(0.7em + 1vmin);
+	}
+}
 
 
 /* ******************************************************* */
 /*                        RESPONSIVE                       */
 /* ******************************************************* */
 
-@media only screen and (min-width: 650px) /* above 650px */
-{
-	.spacer1
+@media only screen and (min-width: 650px)
+/* above 650px */
 	{
-		display:inline-block;
-		width:50pt;
+	.spacer1 {
+		display: inline-block;
+		width: 50pt;
 	}
-	.spacer2
-	{
-		display:inline-block;
-		width:8em;
+
+	.spacer2 {
+		display: inline-block;
+		width: 8em;
 	}
 }
 
 /* Affichage petite tablette */
 
-@media only screen and (max-width: 1200px)
-{
-	header
-	{
+@media only screen and (max-width: 1200px) {
+	header {
 		display: grid;
 		grid-template-columns: 50% 50%;
-	}	
+	}
 
-	.spacer1
-	{
+	.spacer1 {
 		display: inline-block;
 		width: 30pt;
 	}
 
-	header
-	{
+	header {
 		grid-template-columns: 1fr;
 		grid-template-rows: 33% 66%;
 
 		padding: 1em 30pt;
 	}
-	nav ul
-	{
+
+	nav ul {
 		display: block;
 	}
-	nav ul li
-	{
+
+	nav ul li {
 		padding: 0.4em;
 	}
 
 	/* BELOW HEADER */
 
-	main, footer
-	{
+	main,
+	footer {
 		padding: 1.5em;
 	}
 
-	main
-	{
+	main {
 		padding-bottom: 0;
 	}
 
-	main>div
-	{
+	main>div {
 		text-align: center;
 
 		padding: 1.5em;
