@@ -1,14 +1,12 @@
 /* STRUCTURE */
 
 * {
-	/* debug */
-	/*border: 1px solid black;*/
-}
-
-* {
 	/* Let me decide when I want margin or padding. I'm a grown up. */
 	margin: 0;
 	padding: 0;
+
+	/* debug */
+	/*border: 1px solid black;*/
 }
 
 html {
@@ -175,6 +173,13 @@ footer {
 	margin: auto;
 }
 
+/* Main page - Introduction */
+#intro p {
+	text-align: left;
+	font-size: 1.3em;
+	margin: 1em 5em;
+}
+
 /* 
 #contact-form
 {
@@ -270,7 +275,7 @@ footer {
 	}
 
 	main>div {
-		text-align: center;
+		/* text-align: center; */
 
 		padding: 1.5em;
 		margin-bottom: 20pt;
@@ -280,4 +285,12 @@ footer {
 		overflow-x: hidden;
 	}
 
+
+	/* Main page index.html */
+	
+	#intro p {
+		text-align: left;
+		font-size: 1.3em;
+		margin: 0 1em;
+	}
 }
